@@ -1,0 +1,30 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+dj-database-url = "*"
+django = "*"
+django-postgrespool = "*"
+gunicorn = "*"
+"psycopg2" = "*"
+sqlalchemy = "*"
+whitenoise = "*"
+django-test-plus = "*"
+requests = "*"
+"beautifulsoup4" = "*"
+dateutils = "*"
+cloudflare = "*"
+raven = "*"
+arrow = "*"
+django-redis-cache = "*"
+"html5lib" = "*"
+model_mommy = "*"
+factory_boy = "*"
+
+[dev-packages]
+django-debug-toolbar = "*"
+
+[requires]
+python_version = "3.6"

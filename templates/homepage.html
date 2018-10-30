@@ -1,9 +1,9 @@
 {% extends "bighead.html" %}
 
-{% block title %}Simon Willison’s Weblog{% endblock %}
+{% block title %}jacobian.org{% endblock %}
 
 {% block extrahead %}
-<link href="https://github.com/simonw" rel="me">
+<link href="https://github.com/jacobian" rel="me">
 {% for entry in entries %}
 {{ entry.extra_head_html|default:""|safe }}
 {% endfor %}
