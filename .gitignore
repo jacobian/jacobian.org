@@ -3,4 +3,4 @@ venv
 staticfiles
 old-import-xml/blog_comment.xml
 .env
-.vscode
+.vscode/
