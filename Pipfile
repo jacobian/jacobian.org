@@ -25,6 +25,7 @@ factory_boy = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
+jupyterlab = "*"
 
 [requires]
 python_version = "3.6"

@@ -4,3 +4,4 @@ staticfiles
 old-import-xml/blog_comment.xml
 .env
 .vscode/
+jupyter-notebooks/.ipynb_checkpoints/
