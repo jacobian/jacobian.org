@@ -98,20 +98,22 @@ def find_last_x_days(x=10):
     dates = list(dates)
     dates.sort()
     dates.reverse()
-    return dates[0:x]
+    return dates[0:x] if dates else []
 
 
 def index(request):
     last_x_days = find_last_x_days()
 
-    if not last_x_days:
-        raise Http404("No links to display")
-    blogmarks = Blogmark.objects.filter(
-        created__gte=last_x_days[-1]
-    ).prefetch_related('tags')
-    quotations = Quotation.objects.filter(
-        created__gte=last_x_days[-1]
-    ).prefetch_related('tags')
+    if last_x_days:
+        blogmarks = Blogmark.objects.filter(
+            created__gte=last_x_days[-1]
+        ).prefetch_related('tags')
+        quotations = Quotation.objects.filter(
+            created__gte=last_x_days[-1]
+        ).prefetch_related('tags')
+    else:
+        blogmarks = quotations = []
+
     days = []
     for day in last_x_days:
         links = [

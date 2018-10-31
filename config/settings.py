@@ -156,3 +156,5 @@ if REDIS_URL:
         "OPTIONS": {"PASSWORD": redis_url.password, "DB": 0},
         "VERSION": 2,
     }
+
+SITE_ID = 1
