@@ -164,7 +164,7 @@ class Quotation(BaseModel):
 
 
 class Blogmark(BaseModel):
-    link_url = models.URLField()
+    link_url = models.URLField(max_length=1000)
     link_title = models.CharField(max_length=255)
     via_url = models.URLField(blank=True, null=True)
     via_title = models.CharField(max_length=255, blank=True, null=True)
