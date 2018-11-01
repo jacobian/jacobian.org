@@ -158,3 +158,5 @@ if REDIS_URL:
     }
 
 SITE_ID = 1
+
+PINBOARD_API_KEY = os.environ.get('PINBOARD_API_KEY', '')
