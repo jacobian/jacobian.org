@@ -26,13 +26,14 @@
       {% for entry in entries %}
       <h3>
         <a href="{{ entry.get_absolute_url }}">{{ entry.title|typogrify }}</a>
+        <span class="textago"> {% if entry.is_today %}today{% else %}{{ entry.created|text_ago }}{% endif %}</span>
+
       </h3>
-      <p class="textago">({% if entry.is_today %}today{% else %}{{ entry.created|text_ago }}{% endif %})</p>
-      <p class="sunmary">
+      <p class="summary">
         {% if entry.summary %}
           {{ entry.summary }}
         {% else %}
-          {{ entry.body|xhtml|first_paragraph|striptags|truncatewords:"50" }}
+          {{ entry.body|xhtml|first_paragraph|striptags|truncatewords:"50"|typogrify }}
         {% endif %}
       </p>
       {% endfor %}

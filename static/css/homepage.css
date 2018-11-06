@@ -87,7 +87,12 @@ main > div {
 .textago {
     font-size: 0.8em;
     color: #4b4237;
-    margin: 0.5em 0;
+    margin-left: 0.25em;
+    white-space: nowrap;
+}
+.summary {
+  margin-top: 0.5em;
+  font-size: 0.9em;
 }
 
 .day {
