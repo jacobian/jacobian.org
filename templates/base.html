@@ -1,0 +1,32 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ entry.title }} | Jacob Kaplan-Moss</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:300,700|Roboto+Condensed:300,700" rel="stylesheet">
+  <link rel="stylesheet" href="{% static "css/normalize.css" %}">
+  <link rel="stylesheet" href="{% static "css/skeleton.css" %}">
+  <link rel="stylesheet" href="{% static "css/jacobian.css" %}">
+</head>
+<body>
+  <div class="header-wrap">
+    <header>
+      <h1><a href="/">Jacob Kaplan-Moss</a></h1>
+      <nav>
+        <ul>
+          <li><a href="#">Nav 1</a></li>
+          <li><a href="#">Nav 1</a></li>
+          <li><a href="#">Nav 1</a></li>
+        </ul>
+      </nav>
+    </header>
+  </div>
+  <main>
+    {% block content %}{%endblock %}
+  </main>
+  <footer>
+    Whatever goes in the footer goes here.
+  </footer>
+</body>
+</html>

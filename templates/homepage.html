@@ -6,85 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Merriweather:300,700|Roboto+Condensed:300,700" rel="stylesheet">
   <link rel="stylesheet" href="{% static "css/normalize.css" %}">
-  <style>
-    body {
-      background: center / auto auto no-repeat url("{% static 'img/lucas-benjamin-729304-unsplash.jpg' %}") orange;
-      font-family: 'Merriweather', serif;
-      font-weight: light;
-    }
-    a, a:visited {
-      color: inherit;
-      text-decoration: none;
-      background-color: rgba(255, 255, 0, 0.25);
-    }
-    a:hover {
-      background-color: rgba(255, 255, 0, 0.75)
-    }
-    h1, h2, h3 {
-      font-family: 'Roboto Condensed', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    h1 { font-size: 4em; }
-    h3 {
-      font-weight: lighter;
-      margin-top: 1em;
-    }
+  <link rel="stylesheet" href="{% static "css/homepage.css" %}">
 
-    header, main, footer {
-      width: 100%;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    header { margin-top: 10em; }
-    header h1 span {
-      background-color: black;
-      color: orange;
-      padding: 0.1em 0.3em;
-      border-radius: 4px;
-    }
-    header p {
-      font-size: 1.25em;
-      margin-top: 3em;
-      background-color: #ffffff22;
-      border-radius: 4px;
-      line-height: 1.7em;
-      padding: 0.5em;
-    }
-    header p a {
-      font-weight: bold;
-    }
-
-    main {
-      width: 100%;
-      max-width: 960px;
-      margin-top: 3em;
-    }
-    main > div {
-      background-color: #ffffff22;
-      padding: 0.25em;
-      height: 100%;
-      margin-bottom: 1em;
-    }
-
-    .textago {
-      font-size: 0.8em;
-      color: #333;
-      margin: 0.5em 0;
-    }
-
-    @media (min-width: 768px ) {
-      main {
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr;
-        grid-column-gap: 1em;
-      }
-    }
-
-    footer { margin-top: 10em; font-size: 0.7em; color: #333; text-align: right; }
-
-  </style>
 </head>
 <body>
   <header>
@@ -101,11 +24,10 @@
       <h2>Writing</h2>
       {% load entry_tags %}
       {% for entry in entries %}
-        <h3>
-          <a href="{{ entry.get_absolute_url }}">{{ entry.title|typography }}</a>
-        </h3>
-        <p class="textago">({% if entry.is_today %}today{% else %}{{ entry.created|text_ago }}{% endif %})</p>
-        {# {{ entry.body|xhtml|resize_images_to_fit_width:"450"|typography|strip_p_ids|xhtml2html }} #}
+      <h3>
+        <a href="{{ entry.get_absolute_url }}">{{ entry.title|typography }}</a>
+      </h3>
+      <p class="textago">({% if entry.is_today %}today{% else %}{{ entry.created|text_ago }}{% endif %})</p>
       {% endfor %}
     </div>
     <div>
@@ -122,3 +44,4 @@
     Whatever goes in the footer goes here.
   </footer>
 </body>
+</html>
