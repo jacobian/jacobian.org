@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "blog",
     "feedstats",
+    "typogrify",
 )
 
 MIDDLEWARE = (

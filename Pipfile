@@ -23,6 +23,7 @@ django-redis-cache = "*"
 model_mommy = "*"
 factory_boy = "*"
 pinboard = "*"
+typogrify = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

@@ -3,14 +3,14 @@
 {% block title %}{{ entry.title }} | {{ block.super }}{% endblock title %}
 
 {% block content %}
-  {% load entry_tags %}
-  <h2>{{ entry.title|typography }}</h2>
-  {{ entry.body|xhtml|typography|xhtml2html }}
+  {% load entry_tags typogrify_tags %}
+  <h2>{{ entry.title|typogrify }}</h2>
+  {{ entry.body|xhtml|typogrify|xhtml2html }}
 {% endblock content %}
 
 {% block sidebar %}
   <p>
-    This is <strong>{{ entry.title|typography }}</strong> by Jacob Kaplan-Moss,
+    This is <strong>{{ entry.title|typogrify }}</strong> by Jacob Kaplan-Moss,
     posted on <a href="/{{ entry.created|date:"Y/M/j/" }}">{{ entry.created|date:"jS F Y" }}</a>.
   </p>
 
