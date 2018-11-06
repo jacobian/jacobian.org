@@ -27,6 +27,7 @@ a, a:visited {
 }
 
 a:hover {
+    color: inherit;
     background-color: #ffc773;
 }
 
@@ -100,13 +101,32 @@ footer {
     text-align: right;
 }
 
+.calendar {
+  table-layout: fixed;
+  width: 100%
+}
+.calendar td, .calendar th {
+  border: 1px solid #E1E1E1;
+  text-align: center;
+  padding: 0;
+}
+.calendar td.populated a {
+  background-color: #ffecd0;
+  box-shadow: none;
+  font-weight: bold;
+  display: block;
+}
+.calendar td.populated a:hover {
+  background-color: #ffc773;
+}
+
 /* grid layoyt for tablet+ displays */
 @media only screen and (min-width: 760px) {
     .main-wrap {
         display: grid;
         max-width: 960px;
         grid-gap: 20px;
-        grid-template-columns: minmax(0px, 760px) 15em;
+        grid-template-columns: minmax(0px, 760px) 20em;
     }
     aside {
         margin-top: 1.5em;

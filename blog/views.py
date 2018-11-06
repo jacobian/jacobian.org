@@ -249,6 +249,8 @@ def archive_month(request, year, month):
     return render(request, 'archive_month.html', {
         'date': datetime.date(year, month, 1),
         'entries': entries,
+        'blogmarks': blogmarks,
+        'quotations': quotations,
         'tags': tags
     })
 

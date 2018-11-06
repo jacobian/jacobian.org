@@ -58,7 +58,7 @@
                     {% if not item.obj.via_url and not item.obj.link_title|ends_with_punctuation %}.{% endif %}
                     {{ item.obj.commentary|typography }}
                     <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
-                  {% else %}
+                  {% elif item.type == "quotation" %}
                     <blockquote>
                       <p>{{ item.obj.quotation|typography }}</p>
                     </blockquote>
@@ -70,6 +70,8 @@
                       {% endif %}
                       <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
                     </p>
+                  {% else %}
+                    <!-- !!! unknown type: {{ item.type }} -->
                   {% endif %}
                 </li>
               {% endfor %}

@@ -1,0 +1,37 @@
+{% load entry_tags %}
+
+{% for item in items %}
+  {% if item.type == "photoset" %}
+    {# FIXME #}
+
+  {% elif item.type == "entry" %}
+    <h3>
+      <a href="{{ item.obj.get_absolute_url }}">{{  item.obj.title|typography }}</a>
+    </h3>
+
+  {% elif item.type == "blogmark" %}
+    <a href="{{ item.obj.link_url }}">{{ item.obj.link_title }}</a>
+    {% if item.obj.via_url %}
+      (<a href="{{ item.obj.via_url }}" title="{{ item.obj.via_title }}">via</a>)
+    {% endif %}
+    {% if not item.obj.via_url and not item.obj.link_title|ends_with_punctuation %}.{% endif %}
+    {{ item.obj.commentary|typography }}
+    <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
+
+  {% elif item.type == "quotation" %}
+    <blockquote>
+      <p>{{ item.obj.quotation|typography }}</p>
+    </blockquote>
+    <p class="cite">&mdash;
+      {% if item.obj.source_url %}
+        <a href="{{ item.obj.source_url }}">{{ item.obj.source }}</a>
+      {% else %}
+        {{ item.obj.source }}
+      {% endif %}
+      <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
+    </p>
+  {% else %}
+    <!-- !!! unknown type: {{ item.type }} -->
+  {% endif %}
+
+{% endfor %}

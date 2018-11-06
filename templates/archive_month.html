@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Archive for {{ date|date:"F Y" }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+  {% load entry_tags %}
+  <h2>Archive for {{ date|date:"F Y"}}</h2>
+  {% if entries %}
+    <h3>Writing:</h3>
+    <ul>
+      {% for entry in entries %}
+        <li>
+            {{ entry.created|date:"F jS"}}: <a href="{{ entry.get_absolute_url }}">{{ entry.title|typography }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if blogmarks %}
+    <h3>Links:</h3>
+    <ul>
+      {% for link in blogmarks %}
+          <li>
+            <a href="{{ link.link_url }}">{{ link.link_title }}</a>
+            {% if link.via_url %}
+              (<a href="{{ link.via_url }}" title="{{ link.via_title }}">via</a>)
+            {% endif %}
+            {% if not link.via_url and not link.link_title|ends_with_punctuation %}.{% endif %}
+            {{ link.commentary|typography }}
+            <a href="{{ link.get_absolute_url }}" rel="bookmark">#</a>
+          </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {# FIXME: tags? quotations? #}
+{% endblock %}
+
+{% block sidebar %}
+  <h4>
+    <a href="/{{ date|date:"Y" }}/">{{ date|date:"Y" }}</a> &raquo;  {{ date|date:"F" }}</a>
+  </h4>
+ {% load blog_calendar %}
+ {% render_calendar date %}
+{% endblock %}

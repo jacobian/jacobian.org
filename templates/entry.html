@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{{ entry.title }} | {{ block.super }}{% endblock title %}
+
 {% block content %}
   {% load entry_tags %}
   <h2>{{ entry.title|typography }}</h2>

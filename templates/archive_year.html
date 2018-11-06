@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Archive for {{ year }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+  <h2>Archive for {{ year }}</h2>
+  <ul>
+    {% for month in months %}
+      <li><a href="/{{ year }}/{{ month.date|date:"M" }}/">{{ month.date|date:"F" }}</a> -
+      {% for count in month.counts_not_0 %}
+        {{ count.1 }}
+        {% if count.0 == "entry" %}
+          {{ count.1|pluralize:"entry,entries" }}
+        {% else %}
+          {{ count.0 }}{{ count.1|pluralize }}
+        {% endif %}
+        {% if not forloop.last %}/{% endif %}
+      {% endfor %}
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+{% block sidebar %}
+  <h3>Archive by year:</h3>
+  {% for other_year in years_with_content %}
+    <p>
+      {% if other_year.year == year %}
+        <strong>{{ year }}</strong>
+      {% else %}
+        <a href="/{{ other_year|date:"Y" }}/">{{ other_year|date:"Y" }}</a>
+      {% endif %}
+    </p>
+  {% endfor %}
+{% endblock %}

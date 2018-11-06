@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Archive for {{ date|date:"l, jS F Y" }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+  <h2>{{ date|date:"l, F jS Y"}}</h2>
+  {% load blog_tags %}
+  {% blog_mixed_list items %}
+{% endblock %}
+
+{% block sidebar %}
+  <h4>
+   <a href="/{{ date|date:"Y" }}/">{{ date|date:"Y" }}</a> &raquo; <a href="{{ date|date:"/Y/M/" }}">{{ date|date:"F" }}</a>
+  </h4>
+  {% load blog_calendar %}
+  {% render_calendar date %}
+{% endblock %}

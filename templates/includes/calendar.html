@@ -1,0 +1,22 @@
+<table class="calendar">
+  <tr>
+    <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
+  </tr>
+  {% for week in weeks %}
+    <tr>
+      {% for day in week %}
+        {% if day.display %}
+          <td {% if day.populated %}class="populated"{% endif %}>
+            {% if day.populated %}
+              <a href="{{ day.day|date:"/Y/M/j/" }}">{{ day.day|date:"j" }}</a>
+            {% else %}
+              {{ day.day|date:"j" }}
+            {% endif %}
+          </td>
+        {% else %}
+          <td>&nbsp;</td>
+        {% endif %}
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
