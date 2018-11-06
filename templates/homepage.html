@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Merriweather:300,700|Roboto+Condensed:300,700" rel="stylesheet">
   <link rel="stylesheet" href="{% static "css/normalize.css" %}">
+  <link rel="stylesheet" href="{% static "css/skeleton.css" %}">
   <link rel="stylesheet" href="{% static "css/homepage.css" %}">
-
 </head>
 <body>
   <header>
@@ -36,7 +36,47 @@
     </div>
     <div>
       <h2>Elsewhere</h2>
-      <p>...</p>
+      {% for day in days|slice:":5" %}
+        <div class="day">
+          <h3>
+            {% if day.special %}
+              {{ day.special }}
+            {% else %}
+              {{ day.date|date:"jS F Y" }}
+            {% endif %}
+          </h3>
+          {# FIXME: photos #}
+          {% if day.items %}
+            <ul>
+              {% for item in day.items %}
+                <li>
+                  {% if item.type == "link" %}
+                    <a href="{{ item.obj.link_url }}">{{ item.obj.link_title }}</a>
+                    {% if item.obj.via_url %}
+                      (<a href="{{ item.obj.via_url }}" title="{{ item.obj.via_title }}">via</a>)
+                    {% endif %}
+                    {% if not item.obj.via_url and not item.obj.link_title|ends_with_punctuation %}.{% endif %}
+                    {{ item.obj.commentary|typography }}
+                    <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
+                  {% else %}
+                    <blockquote>
+                      <p>{{ item.obj.quotation|typography }}</p>
+                    </blockquote>
+                    <p class="cite">&mdash;
+                      {% if item.obj.source_url %}
+                        <a href="{{ item.obj.source_url }}">{{ item.obj.source }}</a>
+                      {% else %}
+                        {{ item.obj.source }}
+                      {% endif %}
+                      <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
+                    </p>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
     </div>
   </main>
 
@@ -44,4 +84,6 @@
     Whatever goes in the footer goes here.
   </footer>
 </body>
+
 </html>
+

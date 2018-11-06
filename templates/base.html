@@ -13,6 +13,7 @@
   <div class="header-wrap">
     <header>
       <h1><a href="/">Jacob Kaplan-Moss</a></h1>
+      <!--
       <nav>
         <ul>
           <li><a href="#">Nav 1</a></li>
@@ -20,11 +21,19 @@
           <li><a href="#">Nav 1</a></li>
         </ul>
       </nav>
+      -->
     </header>
   </div>
-  <main>
-    {% block content %}{%endblock %}
-  </main>
+
+  <div class="main-wrap">
+    <main>
+      {% block content %}{%endblock %}
+    </main>
+    <aside>
+      {% block sidebar %}{% endblock %}
+    </aside>
+  </div>
+
   <footer>
     Whatever goes in the footer goes here.
   </footer>

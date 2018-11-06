@@ -1,27 +1,49 @@
+/*
+
+color pallette
+                                            lighter     lightest
+text        - dark gunmetal - #1f2426
+text, quiet - dark liver    - #4b4237
+vivid bg    - orange        - #ff9900       #ffc773     #ffecd0
+pale accent - diamond blue  - #c9fbff
+bg          - eggshell      - #f2ecde
+
+*/
+
 body {
-    background-color: orange;
+    background-color: #ff9900;
     background-image: url("../img/lucas-benjamin-729304-unsplash.jpg");
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: top;
     font-family: 'Merriweather', serif;
-    font-weight: light;
+    font-weight: lighter;
 }
 a, a:visited {
     color: inherit;
     text-decoration: none;
-    background-color: rgba(255, 255, 0, 0.25);
+
+    /* thick highlight bottom, using box-shadow to get the highlight closer to the text */
+    box-shadow: inset 0 -3px #ffc773;
 }
 a:hover {
-    background-color: rgba(255, 255, 0, 0.75)
+    background-color: #ffc773;
 }
+
 h1, h2, h3 {
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     padding: 0;
 }
-h1 { font-size: 4em; }
+h1 {
+    font-size: 4em;
+    font-weight: bold;
+}
+h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
 h3 {
-    font-weight: lighter;
+    font-size: 1.25em;
     margin-top: 1em;
 }
 
@@ -33,8 +55,8 @@ header, main, footer {
 
 header { margin-top: 10em; }
 header h1 span {
-    background-color: black;
-    color: orange;
+    background-color: #1f2426;
+    color: #ff9900;
     padding: 0.1em 0.3em;
     border-radius: 4px;
 }
@@ -64,8 +86,17 @@ main > div {
 
 .textago {
     font-size: 0.8em;
-    color: #333;
+    color: #4b4237;
     margin: 0.5em 0;
+}
+
+.day {
+    color: #4b4237;
+}
+
+.day ul {
+    font-size: 0.8em;
+    margin-top: 1em;
 }
 
 @media (min-width: 768px ) {
@@ -76,4 +107,9 @@ main > div {
     }
 }
 
-footer { margin-top: 10em; font-size: 0.7em; color: #333; text-align: right; }
+footer {
+    margin-top: 10em;
+    font-size: 0.7em;
+    color: #1f2426;
+    text-align: right;
+}

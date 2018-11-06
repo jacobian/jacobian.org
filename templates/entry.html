@@ -6,3 +6,35 @@
   {{ entry.body|xhtml|typography|xhtml2html }}
 {% endblock content %}
 
+{% block sidebar %}
+  <p>
+    This is <strong>{{ entry.title|typography }}</strong> by Jacob Kaplan-Moss,
+    posted on <a href="/{{ entry.created|date:"Y/M/j/" }}">{{ entry.created|date:"jS F Y" }}</a>.
+  </p>
+
+  {% if entry.tags.count %}
+    <p>Tagged
+      {% for tag in entry.tags.all %}
+        {{ tag.get_reltag }}{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+  {% endif %}
+
+  {% with entry.get_next_by_created as next_entry %}
+    {% if next_entry %}
+      <p>
+        <strong>Next:</strong>
+        <a href="{{ next_entry.get_absolute_url }}">{{ next_entry.title }}</a>
+      </p>
+    {% endif %}
+  {% endwith %}
+
+  {% with entry.get_previous_by_created as previous_entry %}
+    {% if previous_entry %}
+      <p>
+        <strong>Previous:</strong>
+        <a href="{{ previous_entry.get_absolute_url }}">{{ previous_entry.title }}</a>
+      </p>
+    {% endif %}
+  {% endwith %}
+{% endblock sidebar %}
