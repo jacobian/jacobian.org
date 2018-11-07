@@ -24,6 +24,7 @@ model_mommy = "*"
 factory_boy = "*"
 pinboard = "*"
 typogrify = "*"
+"jinja2" = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
