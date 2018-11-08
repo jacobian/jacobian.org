@@ -25,6 +25,7 @@ factory_boy = "*"
 pinboard = "*"
 typogrify = "*"
 "jinja2" = "*"
+django-postgres-unlimited-varchar = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

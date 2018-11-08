@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     "blog",
     "feedstats",
     "typogrify",
+    "speaking_portfolio",
 )
 
 MIDDLEWARE = (
@@ -160,4 +161,5 @@ if REDIS_URL:
 
 SITE_ID = 1
 
-PINBOARD_API_KEY = os.environ.get('PINBOARD_API_KEY', '')
+PINBOARD_API_KEY = os.environ.get("PINBOARD_API_KEY", "")
+
