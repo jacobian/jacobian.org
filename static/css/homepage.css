@@ -21,15 +21,14 @@ body {
 a, a:visited {
     color: inherit;
     text-decoration: none;
+    font-weight: bold;
 
-    /* thick highlight bottom, using box-shadow to get the highlight closer to the text */
-    box-shadow: inset 0 -3px #ffc773;
 }
 a:hover {
     background-color: #ffc773;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     padding: 0;
@@ -43,8 +42,13 @@ h2 {
     font-weight: bold;
 }
 h3 {
+    font-weight: bold;
     font-size: 1.25em;
     margin-top: 1em;
+}
+h4 {
+    margin-top: 1em;
+    font-size: 1em;
 }
 
 header, main, footer {
@@ -84,10 +88,10 @@ main > div {
     margin-bottom: 1em;
 }
 
-.textago {
+.date {
+    font-weight: normal;
     font-size: 0.8em;
     color: #4b4237;
-    margin-left: 0.25em;
     white-space: nowrap;
 }
 .summary {
@@ -95,13 +99,19 @@ main > div {
   font-size: 0.9em;
 }
 
-.day {
-    color: #4b4237;
+main blockquote { margin: 0; }
+main blockquote p {
+    margin: 1em 0 0 0;
+    font-style: italic;
 }
-
-.day ul {
-    font-size: 0.8em;
-    margin-top: 1em;
+main blockquote p:before {
+    content: open-quote;
+}
+main blockquote p:after {
+    content: close-quote;
+}
+.cite {
+    margin-top: 0.5em;
 }
 
 @media (min-width: 768px ) {

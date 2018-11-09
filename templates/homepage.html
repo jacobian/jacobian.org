@@ -26,8 +26,7 @@
       {% for entry in entries %}
       <h3>
         <a href="{{ entry.get_absolute_url }}">{{ entry.title|typogrify }}</a>
-        <span class="textago"> {% if entry.is_today %}today{% else %}{{ entry.created|text_ago }}{% endif %}</span>
-
+        <span class="date"> {% if entry.is_today %}today{% else %}{{ entry.created|text_ago }}{% endif %}</span>
       </h3>
       <p class="summary">
         {% if entry.summary %}
@@ -38,87 +37,94 @@
       </p>
       {% endfor %}
     </div>
+
     <div>
       <h2>Speaking</h2>
 
-      {% if future_talks %}
-        <h3>Upcoming</h3>
-        <ul>
-          {% for talk in future_talks %}
-            <li>
-              <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a> at
-              {% if talk.conference_url %}
-                <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
-              {% else %}
-                {{ talk.conference_title}}
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-
-      {% if past_talks %}
-        <h3>Past</h3>
-        <ul>
-          {% for talk in past_talks %}
-          <li>
-            <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a> at
+        {% for talk in future_talks %}
+          <h4>
+            <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a>
+            <span class="date">{{ talk.date|date:"F jS Y" }}</span>
+          </h4>
+          <p class="summary">
+            A {{ talk.type }} at
             {% if talk.conference_url %}
               <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
             {% else %}
               {{ talk.conference_title}}
             {% endif %}
-          </li>
-        {% endfor %}
-        </ul>
+          </p>
+      {% endfor %}
+
+      {% if past_talks and future_talks %}
+        <h3>Past talks</h3>
       {% endif %}
+
+      {% for talk in past_talks %}
+        <h4>
+          <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a>
+          <span class="date">{{ talk.date|date:"F jS Y" }}</span>
+        </h4>
+        <p class="summary">
+          A {{ talk.type }} at
+          {% if talk.conference_url %}
+            <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
+          {% else %}
+            {{ talk.conference_title}}
+          {% endif %}
+        </p>
+      {% endfor %}
 
 
     </div>
     <div>
       <h2>Elsewhere</h2>
       {% for day in days|slice:":5" %}
-        <div class="day">
-          <h3>
-            {% if day.special %}
-              {{ day.special }}
-            {% else %}
-              {{ day.date|date:"jS F Y" }}
-            {% endif %}
-          </h3>
-          {# FIXME: photos #}
-          {% if day.items %}
-            <ul>
-              {% for item in day.items %}
-                <li>
-                  {% if item.type == "link" %}
-                    <a href="{{ item.obj.link_url }}">{{ item.obj.link_title }}</a>
-                    {% if item.obj.via_url %}
-                      (<a href="{{ item.obj.via_url }}" title="{{ item.obj.via_title }}">via</a>)
-                    {% endif %}
-                    {% if not item.obj.via_url and not item.obj.link_title|ends_with_punctuation %}.{% endif %}
-                    {{ item.obj.commentary|typogrify }}
-                    <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
-                  {% elif item.type == "quotation" %}
-                    <blockquote>
-                      <p>{{ item.obj.quotation|typogrify }}</p>
-                    </blockquote>
-                    <p class="cite">&mdash;
-                      {% if item.obj.source_url %}
-                        <a href="{{ item.obj.source_url }}">{{ item.obj.source }}</a>
-                      {% else %}
-                        {{ item.obj.source }}
-                      {% endif %}
-                      <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
-                    </p>
-                  {% else %}
-                    <!-- !!! unknown type: {{ item.type }} -->
-                  {% endif %}
-                </li>
-              {% endfor %}
-            </ul>
+        <h3>
+          {% if day.special %}
+            {{ day.special }}
+          {% else %}
+            {{ day.date|date:"F jS" }}
           {% endif %}
-        </div>
+        </h3>
+        {# FIXME: photos #}
+        {% if day.items %}
+          {% for item in day.items %}
+
+            {% if item.type == "link" %}
+              <h4>
+                <a href="{{ item.obj.link_url }}">{{ item.obj.link_title }}</a>
+                {% if item.obj.via_url %}
+                  (<a href="{{ item.obj.via_url }}" title="{{ item.obj.via_title }}">via</a>)
+                {% endif %}
+                {% if not item.obj.via_url and not item.obj.link_title|ends_with_punctuation %}.{% endif %}
+                {% if not item.obj.commentary %}
+                  <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
+                {% else %}
+                {% endif %}
+              </h4>
+              {% if item.obj.commentary %}
+                <p class="summary">
+                  {{ item.obj.commentary|typogrify }}
+                  <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
+                </p>
+              {% endif %}
+
+            {% elif item.type == "quote" %}
+              <blockquote><p>{{ item.obj.quotation|typogrify }}</p></blockquote>
+              <p class="cite">&mdash;
+                {% if item.obj.source_url %}
+                  <a href="{{ item.obj.source_url }}">{{ item.obj.source }}</a>
+                {% else %}
+                  {{ item.obj.source }}
+                {% endif %}
+                <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
+              </p>
+            {% else %}
+              <!-- !!! unknown type: {{ item.type }} -->
+            {% endif %}
+          {% endfor %}
+        {% endif %}
       {% endfor %}
     </div>
   </main>

@@ -127,9 +127,9 @@ def index(request):
             # )
         })
         # If day is today or yesterday, flag it as special
-        if day == datetime.date.today():
+        if day == now().date():
             days[-1]['special'] = 'Today'
-        elif day == datetime.date.today() - datetime.timedelta(days=1):
+        elif day ==  now().date() - datetime.timedelta(days=1):
             days[-1]['special'] = 'Yesterday'
 
     future_talks = Presentation.objects.filter(date__gt=now().date()).order_by('date')[:3]
