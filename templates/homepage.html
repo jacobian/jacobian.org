@@ -40,7 +40,40 @@
     </div>
     <div>
       <h2>Speaking</h2>
-      <p>...</p>
+
+      {% if future_talks %}
+        <h3>Upcoming</h3>
+        <ul>
+          {% for talk in future_talks %}
+            <li>
+              <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a> at
+              {% if talk.conference_url %}
+                <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
+              {% else %}
+                {{ talk.conference_title}}
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if past_talks %}
+        <h3>Past</h3>
+        <ul>
+          {% for talk in past_talks %}
+          <li>
+            <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a> at
+            {% if talk.conference_url %}
+              <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
+            {% else %}
+              {{ talk.conference_title}}
+            {% endif %}
+          </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+
+
     </div>
     <div>
       <h2>Elsewhere</h2>

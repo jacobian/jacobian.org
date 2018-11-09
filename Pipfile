@@ -26,11 +26,13 @@ pinboard = "*"
 typogrify = "*"
 "jinja2" = "*"
 django-postgres-unlimited-varchar = "*"
+micawber = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
 jupyterlab = "*"
 docutils = "*"
+feedparser = "*"
 
 [requires]
 python_version = "3.6"

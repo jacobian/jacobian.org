@@ -1,40 +1,30 @@
 # coding=utf8
-from django.shortcuts import render, get_object_or_404
-from django.utils.timezone import utc
-from django.http import HttpResponse, JsonResponse
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.postgres.search import SearchQuery, SearchRank
-from django.views.decorators.cache import never_cache
-from django.db import models
-from django.db.models.functions import TruncYear, TruncMonth
-from django.conf import settings
-from django.core.paginator import (
-    Paginator,
-    EmptyPage,
-    PageNotAnInteger,
-)
-from django.http import (
-    Http404,
-    HttpResponsePermanentRedirect as Redirect
-)
-from .models import (
-    Blogmark,
-    Entry,
-    Quotation,
-    Photo,
-    Photoset,
-    Tag,
-    load_mixed_objects,
-)
+import datetime
+import json
+import os
+import random
+import time
+from collections import Counter
+
+import CloudFlare
 import requests
 from bs4 import BeautifulSoup as Soup
-import time
-import json
-import datetime
-import random
-from collections import Counter
-import CloudFlare
-import os
+from django.conf import settings
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.postgres.search import SearchQuery, SearchRank
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db import models
+from django.db.models.functions import TruncMonth, TruncYear
+from django.http import Http404, HttpResponse
+from django.http import HttpResponsePermanentRedirect as Redirect
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
+from django.utils.timezone import utc, now
+from django.views.decorators.cache import never_cache
+
+from speaking_portfolio.models import Presentation
+from .models import (Blogmark, Entry, Photo, Photoset, Quotation, Tag,
+                     load_mixed_objects)
 
 MONTHS_3_REV = {
     'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6, 'jul': 7, 'aug': 8,
@@ -142,10 +132,16 @@ def index(request):
         elif day == datetime.date.today() - datetime.timedelta(days=1):
             days[-1]['special'] = 'Yesterday'
 
+    future_talks = Presentation.objects.filter(date__gt=now().date()).order_by('date')[:3]
+    num_past_talks = len(future_talks)
+    past_talks = Presentation.objects.filter(date__lte=now().date()).order_by('-date')[:6 - num_past_talks]
+
     response = render(request, 'homepage.html', {
         'days': days,
         'entries': Entry.objects.prefetch_related('tags')[0:4],
         'current_tags': find_current_tags(5),
+        'future_talks': future_talks,
+        'past_talks': past_talks,
     })
     response['Cache-Control'] = 's-maxage=200'
     return response

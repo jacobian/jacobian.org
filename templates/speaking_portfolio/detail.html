@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load typogrify_tags %}
+{% load micawber_tags %}
+
+{% block title %}{{ presentation.title }} | {{ block.super }}{% endblock title %}
+
+{% block content %}
+  <h2>{{ presentation.title|typogrify }}</h2>
+  {% if presentation.description %}<p>{{ presentation.description|linebreaks }}</p>{% endif %}
+
+  {% if presentation.video_link %}
+    {{ presentation.video_link|oembed:"600" }}
+  {% endif %}
+{% endblock content %}
+
+{% block sidebar %}
+  <p>
+    This is <strong>{{ presentation.title|typogrify }}</strong>
+    a talk given by Jacob Kaplan-Moss at
+    {% if presentation.conference_url %}
+        <a href="{{ presentation.conference_url }}">{{ presentation.conference_title }}</a>
+    {% else %}
+        <strong>{{ presentation.conference_title }}</strong>
+    {% endif %}
+    on {{ presentation.date|date:"F jS Y" }}.
+  </p>
+{% endblock sidebar %}

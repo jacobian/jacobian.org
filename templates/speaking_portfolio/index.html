@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Speaking | {{ block.super }}{% endblock %}
+
+{% block content %}
+  <h2>Speaking</h2>
+
+  {% if future_presentations %}
+    <h3>Upcoming talks</h3>
+    <ul>
+      {% for talk in future_presentations %}
+        <li>
+          <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a> at
+          {% if talk.conference_url %}
+            <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
+          {% else %}
+            {{ talk.conference_title}}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if past_presentations %}
+    <h3>Past talks</h3>
+    {% regroup past_presentations by date|date:"Y" as past_by_year %}
+    {% for year_group in past_by_year %}
+      <h4>{{ year_group.grouper }}</h4>
+      <ul>
+        {% for talk in year_group.list %}
+          <li>
+            <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a> at
+            {% if talk.conference_url %}
+              <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
+            {% else %}
+              {{ talk.conference_title}}
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+  <h3>Want me to speak at your event?</h3>
+  <p>I'm an experenced speaker, capable of covering a variety of topics, both technical and social.
+    I'd love to speak at your conference or event.
+    If you'd like to have me, email me at (my first name) @ (this domain).
+{% endblock sidebar %}
