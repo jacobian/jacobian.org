@@ -1,11 +1,11 @@
+/** NB: mobile first, so layout/color sugar for bigger screens at the bottom **/
+
 /*** header ********************************************/
 
-.splash header {
-    padding: 100px 0;
-}
 .splash header h1 {
-    font-size: 6rem;
+    font-size: 3rem;
 }
+
 .splash header h1 span {
     background-color: #1f2426;
     color: #ff9900;
@@ -13,8 +13,7 @@
     border-radius: 4px;
 }
 .splash header p {
-    font-size: 2rem;
-    margin-top: 3em;
+    margin: 1em 6px 0 6px;
     background-color: #ffffff22;
     border-radius: 4px;
     line-height: 1.7em;
@@ -80,19 +79,31 @@
 }
 
 .splash main .readmore {
-    border-top: 1px #4b4237 dotted;
-    padding-top: 1em;
+    padding: 1em 0;
     font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
 }
 
-/*** grid ********************************************/
+/*** response varients ********************************************/
 
 @media (min-width: 768px ) {
+    /*** grid on wide ***/
     .splash main {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr;
         grid-column-gap: 1em;
+    }
+
+    /*** bigger splash ***/
+    .splash header {
+        padding: 100px 0;
+    }
+    .splash header h1 {
+        font-size: 6rem;
+    }
+    .splash header p {
+        font-size: 2rem;
+        margin-top: 3em;
     }
 }
