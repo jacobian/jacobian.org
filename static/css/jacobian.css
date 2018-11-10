@@ -122,13 +122,13 @@ footer {
 
 /* grid layoyt for tablet+ displays */
 @media only screen and (min-width: 760px) {
-    .main-wrap {
+    .twocol .main-wrap {
         display: grid;
         max-width: 960px;
         grid-gap: 20px;
         grid-template-columns: minmax(0px, 760px) 20em;
     }
-    aside {
+    .twocol aside {
         margin-top: 1.5em;
         border-left: 1px #4b4237 dotted;
         padding-left: 20px;

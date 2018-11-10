@@ -1,25 +1,23 @@
-<!DOCTYPE html>{% load static %}
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Jacob Kaplan-Moss</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css?family=Merriweather:300,700|Roboto+Condensed:300,700" rel="stylesheet">
-  <link rel="stylesheet" href="{% static "css/normalize.css" %}">
-  <link rel="stylesheet" href="{% static "css/skeleton.css" %}">
-  <link rel="stylesheet" href="{% static "css/homepage.css" %}">
-</head>
-<body>
-  <header>
-    <h1><span>Jacob Kaplan-Moss</span></h1>
-    <p>
-      I'm a software developer, co-creator of <a href="https://djangoproect.com/">Django</a>, and an experienced engineering leader.
-      I previously ran teams at <a href="https://18f.gsa.gov/">18F</a> and <a href="https://heroku.com/">Heroku</a>.
-      I'm currently taking new clients through my consultancy, <a href="https://revsys.com/">REVSYS</a>.
-    </p>
-  </header>
+{% extends "base.html" %}
 
-  <main>
+{% block extrahead %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static "css/homepage.css" %}">
+{% endblock extrahead %}
+
+{% block bodyclass %}splash{% endblock %}
+
+{% block header %}
+  <h1><span>Jacob Kaplan-Moss</span></h1>
+  <p>
+    I'm a software developer, co-creator of <a href="https://djangoproect.com/">Django</a>, and an experienced engineering leader.
+    I previously ran teams at <a href="https://18f.gsa.gov/">18F</a> and <a href="https://heroku.com/">Heroku</a>.
+    I'm currently taking new clients through my consultancy, <a href="https://revsys.com/">REVSYS</a>.
+  </p>
+{% endblock %}
+
+{% block main %}
+  <main class="home">
     <div>
       <h2>Writing</h2>
       {% load entry_tags typogrify_tags %}
@@ -129,10 +127,5 @@
     </div>
   </main>
 
-  <footer>
-    Whatever goes in the footer goes here.
-  </footer>
-</body>
-
-</html>
+{% endblock %}
 

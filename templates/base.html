@@ -8,30 +8,28 @@
   <link rel="stylesheet" href="{% static "css/normalize.css" %}">
   <link rel="stylesheet" href="{% static "css/skeleton.css" %}">
   <link rel="stylesheet" href="{% static "css/jacobian.css" %}">
+  {% block extrahead %}{% endblock %}
 </head>
-<body>
+<body class="{% block bodyclass %}{% endblock %}">
   <div class="header-wrap">
     <header>
-      <h1><a href="/">Jacob Kaplan-Moss</a></h1>
-      <!--
-      <nav>
-        <ul>
-          <li><a href="#">Nav 1</a></li>
-          <li><a href="#">Nav 1</a></li>
-          <li><a href="#">Nav 1</a></li>
-        </ul>
-      </nav>
-      -->
+      {% block header %}
+        <h1><a href="/">Jacob Kaplan-Moss</a></h1>
+        <!--
+        <nav>
+          <ul>
+            <li><a href="#">Nav 1</a></li>
+            <li><a href="#">Nav 1</a></li>
+            <li><a href="#">Nav 1</a></li>
+          </ul>
+        </nav>
+        -->
+      {% endblock %}
     </header>
   </div>
 
   <div class="main-wrap">
-    <main>
-      {% block content %}{%endblock %}
-    </main>
-    <aside>
-      {% block sidebar %}{% endblock %}
-    </aside>
+    {% block main %}{% endblock %}
   </div>
 
   <footer>

@@ -1,130 +1,58 @@
-/*
+/*** header ********************************************/
 
-color pallette
-                                            lighter     lightest
-text        - dark gunmetal - #1f2426
-text, quiet - dark liver    - #4b4237
-vivid bg    - orange        - #ff9900       #ffc773     #ffecd0
-pale accent - diamond blue  - #c9fbff
-bg          - eggshell      - #f2ecde
-
-*/
-
-body {
-    background-color: #ff9900;
-    background-image: url("../img/lucas-benjamin-729304-unsplash.jpg");
-    background-repeat: no-repeat;
-    background-position: top;
-    font-family: 'Merriweather', serif;
-    font-weight: lighter;
+.splash header {
+    padding: 100px 0;
 }
-a, a:visited {
-    color: inherit;
-    text-decoration: none;
-    font-weight: bold;
-
+.splash header h1 {
+    font-size: 6rem;
 }
-a:hover {
-    background-color: #ffc773;
-}
-
-h1, h2, h3, h4 {
-    font-family: 'Roboto Condensed', sans-serif;
-    margin: 0;
-    padding: 0;
-}
-h1 {
-    font-size: 4em;
-    font-weight: bold;
-}
-h2 {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-h3 {
-    font-weight: bold;
-    font-size: 1.25em;
-    margin-top: 1em;
-}
-h4 {
-    margin-top: 1em;
-    font-size: 1em;
-}
-
-header, main, footer {
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
-}
-
-header { margin-top: 10em; }
-header h1 span {
+.splash header h1 span {
     background-color: #1f2426;
     color: #ff9900;
     padding: 0.1em 0.3em;
     border-radius: 4px;
 }
-header p {
-    font-size: 1.25em;
+.splash header p {
+    font-size: 2rem;
     margin-top: 3em;
     background-color: #ffffff22;
     border-radius: 4px;
     line-height: 1.7em;
     padding: 0.5em;
 }
-header p a {
+.splash header a {
     font-weight: bold;
+    box-shadow: none;
 }
 
-main {
-    width: 100%;
-    max-width: 960px;
-    margin-top: 3em;
-}
-main > div {
-    background-color: #ffffff22;
+/*** main ********************************************/
+
+.splash main > div {
     padding: 0.25em;
-    height: 100%;
     margin-bottom: 1em;
 }
 
-.date {
+.splash main blockquote { margin: 0; }
+.splash main blockquote p {
+    margin: 1em 0 0 0;
+    font-style: italic;
+}
+.splash main blockquote p:before { content: open-quote; }
+.splash main blockquote p:after { content: close-quote; }
+.splash main .cite { margin-top: 0.5em; }
+.splash main .date {
     font-weight: normal;
     font-size: 0.8em;
     color: #4b4237;
     white-space: nowrap;
 }
-.summary {
-  margin-top: 0.5em;
-  font-size: 0.9em;
-}
 
-main blockquote { margin: 0; }
-main blockquote p {
-    margin: 1em 0 0 0;
-    font-style: italic;
-}
-main blockquote p:before {
-    content: open-quote;
-}
-main blockquote p:after {
-    content: close-quote;
-}
-.cite {
-    margin-top: 0.5em;
-}
+/*** grid ********************************************/
 
 @media (min-width: 768px ) {
-    main {
+    .splash main {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr;
         grid-column-gap: 1em;
     }
-}
-
-footer {
-    margin-top: 10em;
-    font-size: 0.7em;
-    color: #1f2426;
-    text-align: right;
 }
