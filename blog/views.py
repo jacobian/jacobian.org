@@ -66,8 +66,8 @@ def archive_item(request, year, month, day, slug):
     # If we get here, non of the views matched
     raise Http404
 
-HOMEPAGE_NUM_ENTRIES = 4
-HOMEPAGE_NUM_ELSEWHERE = 8
+HOMEPAGE_NUM_ENTRIES = 5
+HOMEPAGE_NUM_ELSEWHERE = 7
 HOMRPAGE_NUM_TALKS = 6
 
 def index(request):

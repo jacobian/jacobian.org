@@ -27,6 +27,10 @@
 
 /*** main ********************************************/
 
+.splash main {
+    padding-top: 1em;
+}
+
 .splash main > div {
     padding: 0.25em;
     margin-bottom: 1em;
@@ -43,6 +47,22 @@
     border-radius: 4px;
 }
 
+.splash main h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.splash main h4 {
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+.splash main h5 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+
+
 .splash main blockquote { margin: 0; }
 .splash main blockquote p {
     margin: 1em 0 0 0;
@@ -50,12 +70,21 @@
 }
 .splash main blockquote p:before { content: open-quote; }
 .splash main blockquote p:after { content: close-quote; }
-.splash main .cite { margin-top: 0.5em; }
+.splash main .cite { margin-top: 0; }
+
 .splash main .date {
     font-weight: normal;
-    font-size: 0.8em;
+    font-size: 1.2rem;
     color: #4b4237;
     white-space: nowrap;
+}
+
+.splash main .readmore {
+    border-top: 1px #4b4237 dotted;
+    padding-top: 1em;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
 }
 
 /*** grid ********************************************/

@@ -23,18 +23,21 @@
       <h2><span>Writing</span></h2>
       {% load entry_tags typogrify_tags %}
       {% for entry in entries %}
-      <h4>
-        <a href="{{ entry.get_absolute_url }}">{{ entry.title|typogrify }}</a>
-        <span class="date"> {% if entry.is_today %}today{% else %}{{ entry.created|text_ago }}{% endif %}</span>
-      </h4>
-      <p class="summary">
-        {% if entry.summary %}
-          {{ entry.summary }}
-        {% else %}
-          {{ entry.body|xhtml|first_paragraph|striptags|truncatewords:"50"|typogrify }}
-        {% endif %}
-      </p>
+        <h3>
+          <a href="{{ entry.get_absolute_url }}">{{ entry.title|typogrify }}</a>
+          <span class="date"> {% if entry.is_today %}today{% else %}{{ entry.created|timesince }} ago{% endif %}</span>
+        </h3>
+        <p class="summary">
+          {% if entry.summary %}
+            {{ entry.summary }}
+          {% else %}
+            {{ entry.body|xhtml|first_paragraph|striptags|truncatewords:"50"|typogrify }}
+          {% endif %}
+        </p>
       {% endfor %}
+      <h4 class="readmore">
+        <a href="{% url 'speaking_portfolio_index' %}">Writing archive &rarr;</a>
+      </h4>
     </div> <!-- /writing -->
 
     <div>
@@ -42,10 +45,22 @@
         {% for talk in talks %}
           <h4>
             <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a>
-            <span class="date">{{ talk.date|date:"F jS Y" }}</span>
+            <span class="date">
+              {% if talk.is_future %}
+                {{ talk.date|date:"F jS Y" }}
+              {% else %}
+                {{ talk.date|timesince }} ago
+              {% endif %}
+            </span>
           </h4>
           <p class="summary">
-            A {{ talk.type }} at
+            A {{ talk.type }}
+            {% if talk.is_future %}
+              I'll be giving
+            {% else %}
+              I gave
+            {% endif %}
+            at
             {% if talk.conference_url %}
               <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
             {% else %}
@@ -53,29 +68,25 @@
             {% endif %}
           </p>
       {% endfor %}
+      <h4 class="readmore">
+        <a href="{% url 'speaking_portfolio_index' %}">Speaking archive &rarr;</a>
+      </h4>
     </div> <!-- /speaking -->
 
     <div>
       <h2><span>Elsewhere</span></h2>
       {% for item in elsewhere %}
         {% if item.type == "blogmark" %}
-          <h4>
-            <a href="{{ item.link_url }}">{{ item.link_title }}</a>
+          <h5>
+            📌 <a href="{{ item.link_url }}">{{ item.link_title }}</a>
             {% if item.via_url %}
               (<a href="{{ item.via_url }}" title="{{ item.via_title }}">via</a>)
             {% endif %}
-            {% if not item.via_url and not item.link_title|ends_with_punctuation %}.{% endif %}
-            {% if not item.commentary %}
-              <a href="{{ item.get_absolute_url }}" rel="bookmark">#</a>
-            {% else %}
-            {% endif %}
-          </h4>
-          {% if item.commentary %}
-            <p class="summary">
-              {{ item.commentary|typogrify }}
-              <a href="{{ item.get_absolute_url }}" rel="bookmark">#</a>
-            </p>
-          {% endif %}
+          </h5>
+          <p class="summary">
+            {{ item.commentary|typogrify }}
+            <a href="{{ item.get_absolute_url }}" rel="bookmark">#</a>
+          </p>
 
         {% elif item.type == "quotation" %}
           <blockquote><p>{{ item.quotation|typogrify }}</p></blockquote>
@@ -92,6 +103,9 @@
         {% endif %}
 
       {% endfor %}
+      <h4 class="readmore">
+          <a href="#">Elsewhere archive &rarr;</a>
+        </h4>
     </div> <!-- elsewhere -->
   </main>
 {% endblock %}

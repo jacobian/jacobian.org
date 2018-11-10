@@ -95,10 +95,10 @@ aside p {
 }
 
 footer {
-    margin-top: 10em;
+    margin: 10em auto;
     font-size: 0.7em;
     color: #4b4237;
-    text-align: right;
+    text-align: center;
 }
 
 .calendar {

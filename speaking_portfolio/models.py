@@ -1,6 +1,7 @@
 from django.db import models
 from django_postgres_unlimited_varchar import UnlimitedCharField
 from django.urls import reverse
+from django.utils import timezone
 
 PRESENTATION_TYPE_CHOICES = [
     (i, i.title()) for i in ["keynote", "talk", "tutorial", "panel"]
@@ -32,3 +33,11 @@ class Presentation(models.Model):
 
     def get_absolute_url(self):
         return reverse("speaking_portfolio_detail", args=[self.slug])
+
+    @property
+    def is_future(self):
+        return self.date > timezone.now().date()
+
+    @property
+    def is_past(self):
+        return self.date <= timezone.now().date()
