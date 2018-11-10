@@ -68,7 +68,7 @@ def archive_item(request, year, month, day, slug):
 
 HOMEPAGE_NUM_ENTRIES = 5
 HOMEPAGE_NUM_ELSEWHERE = 7
-HOMRPAGE_NUM_TALKS = 6
+HOMEPAGE_NUM_TALKS = 6
 
 def index(request):
     entries = Entry.objects.prefetch_related('tags')[:HOMEPAGE_NUM_ENTRIES]
@@ -78,9 +78,9 @@ def index(request):
     elsewhere = sorted(list(blogmarks) + list(quotations), key=attrgetter('created'), reverse=True)
     elsewhere = list(elsewhere)[:HOMEPAGE_NUM_ELSEWHERE]
 
-    future_talks = Presentation.objects.filter(date__gt=now().date()).order_by('date')[:HOMRPAGE_NUM_TALKS]
-    past_talks = Presentation.objects.filter(date__lte=now().date()).order_by('-date')[:HOMRPAGE_NUM_TALKS]
-    talks = (list(future_talks) + list(past_talks))[:HOMRPAGE_NUM_TALKS]
+    future_talks = Presentation.objects.filter(date__gt=now().date()).order_by('date')[:HOMEPAGE_NUM_TALKS]
+    past_talks = Presentation.objects.filter(date__lte=now().date()).order_by('-date')[:HOMEPAGE_NUM_TALKS]
+    talks = (list(future_talks) + list(past_talks))[:HOMEPAGE_NUM_TALKS]
 
     response = render(request, 'homepage.html', {
         'entries': entries,
