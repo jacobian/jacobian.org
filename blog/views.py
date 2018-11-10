@@ -4,6 +4,7 @@ import json
 import os
 import random
 import time
+from operator import attrgetter
 from collections import Counter
 
 import CloudFlare
@@ -19,7 +20,7 @@ from django.http import Http404, HttpResponse
 from django.http import HttpResponsePermanentRedirect as Redirect
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.utils.timezone import utc, now
+from django.utils.timezone import now
 from django.views.decorators.cache import never_cache
 
 from speaking_portfolio.models import Presentation
@@ -65,73 +66,27 @@ def archive_item(request, year, month, day, slug):
     # If we get here, non of the views matched
     raise Http404
 
-
-def find_last_x_days(x=10):
-    """
-    Returns 5 date objects representing most recent days that have either
-    photos, blogmarks or quotes available. Looks at most recent 50 of each.
-    """
-    # photos = list(Photo.objects.values('created')[0:50])
-    blogmarks = list(Blogmark.objects.values('created')[0:50])
-    quotes = list(Quotation.objects.values('created')[0:50])
-    dates = set([o['created'].date() for o in blogmarks + quotes])
-    dates = list(dates)
-    dates.sort()
-    dates.reverse()
-    return dates[0:x]
-
+HOMEPAGE_NUM_ENTRIES = 4
+HOMEPAGE_NUM_ELSEWHERE = 8
+HOMRPAGE_NUM_TALKS = 6
 
 def index(request):
-    last_x_days = find_last_x_days()
+    entries = Entry.objects.prefetch_related('tags')[:HOMEPAGE_NUM_ENTRIES]
 
-    if not last_x_days:
-        raise Http404("No links to display")
-    blogmarks = Blogmark.objects.filter(
-        created__gte=last_x_days[-1]
-    ).prefetch_related('tags')
-    quotations = Quotation.objects.filter(
-        created__gte=last_x_days[-1]
-    ).prefetch_related('tags')
-    days = []
-    for day in last_x_days:
-        links = [
-            {'type': 'link', 'obj': link, 'date': link.created}
-            for link in blogmarks
-            if link.created.date() == day
-        ]
-        quotes = [
-            {'type': 'quote', 'obj': q, 'date': q.created}
-            for q in quotations
-            if q.created.date() == day
-        ]
-        items = links + quotes
-        items.sort(key=lambda x: x['date'], reverse=True)
-        days.append({
-            'date': day,
-            'items': items,
-            'photos': []
-            # Photo.objects.filter(
-            #   created__year = day.year,
-            #   created__month = day.month,
-            #   created__day = day.day
-            # )
-        })
-        # If day is today or yesterday, flag it as special
-        if day == now().date():
-            days[-1]['special'] = 'Today'
-        elif day ==  now().date() - datetime.timedelta(days=1):
-            days[-1]['special'] = 'Yesterday'
+    blogmarks = Blogmark.objects.order_by('-created').prefetch_related('tags')[:50]
+    quotations = Quotation.objects.order_by('-created').prefetch_related('tags')[:50]
+    elsewhere = sorted(list(blogmarks) + list(quotations), key=attrgetter('created'), reverse=True)
+    elsewhere = list(elsewhere)[:HOMEPAGE_NUM_ELSEWHERE]
 
-    future_talks = Presentation.objects.filter(date__gt=now().date()).order_by('date')[:3]
-    num_past_talks = len(future_talks)
-    past_talks = Presentation.objects.filter(date__lte=now().date()).order_by('-date')[:6 - num_past_talks]
+    future_talks = Presentation.objects.filter(date__gt=now().date()).order_by('date')[:HOMRPAGE_NUM_TALKS]
+    past_talks = Presentation.objects.filter(date__lte=now().date()).order_by('-date')[:HOMRPAGE_NUM_TALKS]
+    talks = (list(future_talks) + list(past_talks))[:HOMRPAGE_NUM_TALKS]
 
     response = render(request, 'homepage.html', {
-        'days': days,
-        'entries': Entry.objects.prefetch_related('tags')[0:4],
-        'current_tags': find_current_tags(5),
-        'future_talks': future_talks,
-        'past_talks': past_talks,
+        'entries': entries,
+        'talks': talks,
+        'elsewhere': elsewhere,
+        # 'current_tags': find_current_tags(5),
     })
     response['Cache-Control'] = 's-maxage=200'
     return response

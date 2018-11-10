@@ -84,6 +84,10 @@ class BaseModel(models.Model):
     search_document = SearchVectorField(null=True)
     import_ref = models.TextField(max_length=64, null=True, unique=True)
 
+    @property
+    def type(self):
+        return self._meta.model_name
+
     def created_unixtimestamp(self):
         return arrow.get(self.created).timestamp
 

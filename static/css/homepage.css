@@ -32,6 +32,17 @@
     margin-bottom: 1em;
 }
 
+.splash main h2 {
+    font-size: 2.5rem;
+}
+
+.splash main h2 span {
+    background-color: #1f2426;
+    color: #f2ecde;
+    padding: 0.2em 0.25em;
+    border-radius: 4px;
+}
+
 .splash main blockquote { margin: 0; }
 .splash main blockquote p {
     margin: 1em 0 0 0;
