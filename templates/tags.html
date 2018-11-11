@@ -1,0 +1,18 @@
+{% extends "base_2col.html" %}
+
+{% block title %}Tags | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+  <form action="{% url 'search' %}" method="GET">
+    <input type="search" class="search-input" name="q" value="" style="width: 80%">
+    <input type="submit" class="search-submit" value="Search">
+  </form>
+
+  {% load tag_cloud %}
+    <div class="tagcloud">{% tag_cloud %}</div>
+  {% endblock %}
+
+{% block sidebar %}
+  <p>You can view the intersection of up to three tags by navigating to <samp>/tags/tag1+tag2/</samp>.</p>
+{% endblock %}

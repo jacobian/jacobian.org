@@ -173,6 +173,23 @@ form.search {
     text-indent: -1.5em;
 }
 
+/*** tags *******************************************************/
+
+.tagcloud {
+    text-align: center;
+}
+.tagcloud a {
+    vertical-align: middle
+}
+.tagcloud .not-popular-at-all { font-size: 0.70em; }
+.tagcloud .not-very-popular { font-size: 0.89em; }
+.tagcloud .somewhat-popular { font-size: 1.07em; }
+.tagcloud .somewhat-more-popular { font-size: 1.26em; }
+.tagcloud .popular { font-size: 1.44em; }
+.tagcloud .more-than-just-popular { font-size: 1.63em; }
+.tagcloud .very-popular { font-size: 1.81em; }
+.tagcloud .ultra-popular { font-size: 2.00em; }
+
 /*** overrides for wider screens ************************************************/
 
 @media only screen and (min-width: 768px) {
