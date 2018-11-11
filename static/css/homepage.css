@@ -4,6 +4,7 @@
 
 .splash header h1 {
     font-size: 3rem;
+    font-weight: bold;
 }
 
 .splash header h1 span {
@@ -35,31 +36,15 @@
     margin-bottom: 1em;
 }
 
-.splash main h2 {
-    font-size: 2.5rem;
-}
-
 .splash main h2 span {
     background-color: #1f2426;
     color: #f2ecde;
     padding: 0.2em 0.25em;
     border-radius: 4px;
+    font-weight: bold;
 }
 
-.splash main h3 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 0;
-}
-.splash main h4 {
-    font-size: 2rem;
-    margin-bottom: 0;
-}
-.splash main h5 {
-    font-size: 1.5rem;
-    margin-bottom: 0;
-    margin-top: 1em;
-}
+.splash h3, .splash h4, .splash h5 { margin-bottom: 0; }
 
 
 .splash main blockquote { margin: 0; }
@@ -71,18 +56,10 @@
 .splash main blockquote p:after { content: close-quote; }
 .splash main .cite { margin-top: 0; }
 
-.splash main .date {
-    font-weight: normal;
-    font-size: 1.2rem;
-    color: #4b4237;
-    white-space: nowrap;
-}
-
 .splash main .readmore {
     padding: 1em 0;
     font-size: 1.5rem;
     font-weight: bold;
-    text-align: center;
 }
 
 /*** response varients ********************************************/
@@ -92,7 +69,11 @@
     .splash main {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr;
-        grid-column-gap: 1em;
+        grid-column-gap: 2em;
+    }
+
+    .splash .readmore {
+        grid-row-start: 2;
     }
 
     /*** bigger splash ***/

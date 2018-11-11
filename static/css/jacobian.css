@@ -15,6 +15,8 @@ NB: mobile-first, so sugar for larger screens down below.
 
 */
 
+/*** basic fonts and elements ************************************************/
+
 body {
     font-family: 'Merriweather', serif;
     font-weight: light;
@@ -39,9 +41,28 @@ a:hover {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Roboto Condensed', sans-serif;
 }
-h1, h2 {
-    font-weight: bold
+h2 {
+    font-size: 3rem;
 }
+h3 {
+    font-size: 2.5rem;
+}
+h4 {
+    font-size: 2rem;
+}
+h5 {
+    font-size: 1.5rem;
+
+}
+
+.date {
+    font-weight: normal;
+    font-size: 1.2rem;
+    color: #4b4237;
+    white-space: nowrap;
+}
+
+/*** header ************************************************/
 
 .header-wrap {
     background-color: #ff9900;
@@ -64,6 +85,7 @@ header h1 {
     font-size: 2.5rem;
     margin-bottom: 0;
     padding-left: 8px;
+    font-weight: bold;
 }
 
 header nav {
@@ -87,6 +109,7 @@ header h1 a, header h1 a:visited {
     border-radius: 4px;
 }
 
+/*** main body / sidebar / footer ************************************************/
 
 main {
     padding: 0 6px;
@@ -109,6 +132,8 @@ footer {
     text-align: center;
 }
 
+/*** calendar (date archive pages) ************************************************/
+
 .calendar {
   table-layout: fixed;
   width: 100%
@@ -128,7 +153,8 @@ footer {
   background-color: #ffc773;
 }
 
-/* grid layoyt for tablet+ displays */
+/*** overrides for wider screens ************************************************/
+
 @media only screen and (min-width: 768px) {
     header h1 {
         font-size: 4rem;
