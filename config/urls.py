@@ -78,6 +78,7 @@ urlpatterns = [
     re_path(r"^admin/", admin.site.urls),
     re_path(r"^static/", static_redirect),
     path("speaking/", include("speaking_portfolio.urls")),
+    path("writing/", blog_views.entry_archive, name="entry_archive"),
 ]
 if settings.DEBUG:
     import debug_toolbar

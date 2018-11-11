@@ -1,0 +1,26 @@
+{% extends "base_2col.html" %}
+
+{% block title %}Writing archive | {{ block.super }}{% endblock %}
+
+{% block content %}
+  {% load entry_tags typogrify_tags %}
+  <h2>Writing Archive</h2>
+  {% for year, entries in entries_by_year.items %}
+    <h3 id="{{ year }}">{{ year }}</h3>
+    {% for entry in entries %}
+      <h4>
+        <a href="{{ entry.get_absolute_url }}">{{ entry.title|typogrify }}</a>
+        <span class="date">{{ entry.created|date:"F jS, Y" }}</span>
+      </h4>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+  <h3>Jump to year:</h3>
+  {% for year in entries_by_year.keys %}
+    <p>
+      <a href="#{{ year }}">{{ year }}</a>
+    </p>
+  {% endfor %}
+{% endblock %}

@@ -308,6 +308,17 @@ def archive_tag(request, tags):
         'tag': Tag.objects.get(tag=tags[0]),
     })
 
+def entry_archive(request):
+    entries = Entry.objects.order_by('-created').prefetch_related('tags').only('created', 'title', 'id', 'slug')
+
+    # This is neat: this works in Python 3.6+ because dicts remember key order now!
+    entries_by_year = {}
+    for entry in entries:
+        entries_by_year.setdefault(entry.created.year, []).append(entry)
+
+    return render(request, 'entry_archive.html', {
+        'entries_by_year': entries_by_year
+    })
 
 @never_cache
 @staff_member_required
