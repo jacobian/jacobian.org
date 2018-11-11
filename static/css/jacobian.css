@@ -153,6 +153,26 @@ footer {
   background-color: #ffc773;
 }
 
+/*** search ************************************************/
+
+form.search {
+    margin-bottom: 0;
+}
+
+.pagination {
+    margin-bottom: 1em;
+}
+
+.search-results .summary {
+    margin-top: -1em;
+    margin-left: 2em;
+}
+
+.search-results h4 {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+}
+
 /*** overrides for wider screens ************************************************/
 
 @media only screen and (min-width: 768px) {

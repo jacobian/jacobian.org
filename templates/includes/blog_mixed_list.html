@@ -5,18 +5,25 @@
     {# FIXME #}
 
   {% elif item.type == "entry" %}
-    <h3>
-      <a href="{{ item.obj.get_absolute_url }}">{{  item.obj.title|typography }}</a>
-    </h3>
+    <h4>
+      📝 <a href="{{ item.obj.get_absolute_url }}">{{  item.obj.title|typography }}</a>
+    </h4>
 
   {% elif item.type == "blogmark" %}
-    <a href="{{ item.obj.link_url }}">{{ item.obj.link_title }}</a>
-    {% if item.obj.via_url %}
-      (<a href="{{ item.obj.via_url }}" title="{{ item.obj.via_title }}">via</a>)
+    <h4>
+      📌 <a href="{{ item.obj.link_url }}">{{ item.obj.link_title }}</a>
+      {% if item.obj.via_url %}
+        (<a href="{{ item.obj.via_url }}" title="{{ item.obj.via_title }}">via</a>)
+      {% endif %}
+      {% if not item.obj.commentary %}
+        <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
+      {% endif %}
+    </h4>
+    {% if item.obj.commentary %}
+      <p class="summary">{{ item.obj.commentary|typography }}
+        <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
+      </p>
     {% endif %}
-    {% if not item.obj.via_url and not item.obj.link_title|ends_with_punctuation %}.{% endif %}
-    {{ item.obj.commentary|typography }}
-    <a href="{{ item.obj.get_absolute_url }}" rel="bookmark">#</a>
 
   {% elif item.type == "quotation" %}
     <blockquote>

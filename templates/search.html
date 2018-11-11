@@ -1,0 +1,87 @@
+{% extends "base_2col.html" %}
+
+{% block title %}{{ title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+  {% load blog_tags %}
+  <h2>{{ title }}</h2>
+
+  <form class="search" action="{{ request.path }}" method="GET">
+    <input type="search" class="search-input" name="q" value="{{ q }}" style="width: 80%">
+    <input type="submit" class="search-submit" value="Search">
+    {% if selected %}
+      {% for type, value in selected.items %}
+        {% if type == 'tags' %}
+          {% for tag in value %}
+            <input type="hidden" name="tag" value="{{ tag }}">
+          {% endfor %}
+        {% else %}
+          <input type="hidden" name="{{ type }}" value="{{ value }}">
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </form>
+
+  {% if selected %}
+  <p class="search-selections">
+    Filters:
+    {% if selected.type %}
+      <a class="selected-tag" href="{% remove_qsarg "type" selected.type %}">Type: {{ selected.type }} <strong>&#x00D7;</strong></a>
+    {% endif %}
+    {% if selected.year %}
+      <a class="selected-tag" href="{% remove_qsarg "year" selected.year %}">Year: {{ selected.year }} <strong>&#x00D7;</strong></a>
+    {% endif %}
+    {% if selected.month %}
+      <a class="selected-tag" href="{% remove_qsarg "month" selected.month %}">Month: {{ selected.month_name }} <strong>&#x00D7;</strong></a>
+    {% endif %}
+    {% for tag in selected.tags %}
+      <a class="selected-tag" href="{% remove_qsarg "tag" tag %}">{{ tag }} <strong>&#x00D7;</strong></a>
+    {% endfor %}
+  </p>
+  {% endif %}
+
+  {% if total %}
+    {% if selected or q %}
+      {% include "includes/pagination.html" with page_total=total %}
+      <div class="search-results">
+        {% blog_mixed_list_with_dates results %}
+      </div>
+      {% include "includes/pagination.html" %}
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+  {% if type_counts %}
+    <h3>Types</h3>
+    <ul>
+      {% for t in type_counts %}
+        <li><a href="{% add_qsarg "type" t.type %}">{{ t.type }}</a> {{ t.n }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if year_counts %}
+    <h3>Years</h3>
+    <ul>
+      {% for t in year_counts %}
+        <li><a href="{% add_qsarg "year" t.year|date:"Y" %}">{{ t.year|date:"Y" }}</a> {{ t.n }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if month_counts %}
+    <h3>Months</h3>
+    <ul>
+      {% for t in month_counts %}
+        <li><a href="{% add_qsarg "month" t.month|date:"n" %}">{{ t.month|date:"F" }}</a> {{ t.n }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if tag_counts %}
+    <h3>Tags</h3>
+    <ul>
+      {% for t in tag_counts %}
+        <li><a href="{% add_qsarg "tag" t.tag %}">{{ t.tag }}</a> {{ t.n }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}
