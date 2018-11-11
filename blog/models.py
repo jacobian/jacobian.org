@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.dates import MONTHS_3
 from django.utils.safestring import mark_safe
+from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.postgres.fields import JSONField
@@ -25,7 +26,7 @@ class Tag(models.Model):
         return self.tag
 
     def get_absolute_url(self):
-        return "/tags/%s/" % self.tag
+        return reverse('tag_detail', args=[self.tag])
 
     def get_link(self, reltag=False):
         return mark_safe('<a href="%s"%s>%s</a>' % (
@@ -95,10 +96,10 @@ class BaseModel(models.Model):
         return ' '.join(t.tag for t in self.tags.all())
 
     def get_absolute_url(self):
-        return '/%d/%s/%d/%s/' % (
-            self.created.year, MONTHS_3[self.created.month].title(),
+        return reverse('blog_archive_item', args=[
+            self.created.year, self.created.month,
             self.created.day, self.slug
-        )
+        ])
 
     def edit_url(self):
         return "/admin/blog/%s/%d/" % (

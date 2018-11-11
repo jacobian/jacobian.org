@@ -8,7 +8,7 @@
         {% if day.display %}
           <td {% if day.populated %}class="populated"{% endif %}>
             {% if day.populated %}
-              <a href="{{ day.day|date:"/Y/M/j/" }}">{{ day.day|date:"j" }}</a>
+              <a href="{% url 'blog_archive_day' day.day.year day.day.month day.day.day %}">{{ day.day|date:"j" }}</a>
             {% else %}
               {{ day.day|date:"j" }}
             {% endif %}

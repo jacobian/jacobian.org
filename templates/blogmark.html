@@ -1,0 +1,24 @@
+{% extends "base_2col.html" %}
+
+{% block link_title %}{{ blogmark.link_title }} | {{ block.super }}{% endblock link_title %}
+
+{% block content %}
+  {% load entry_tags typogrify_tags %}
+  <h2>FIXME</h2>
+{% endblock content %}
+
+{% block sidebar %}
+  <p>
+    This is <strong>{{ blogmark.link_title|typogrify }}</strong> by Jacob Kaplan-Moss,
+    linked on <a href="/{{ blogmark.created|date:"Y/M/j/" }}">{{ blogmark.created|date:"jS F Y" }}</a>.
+  </p>
+
+  {% if blogmark.tags.count %}
+    <p>Tagged
+      {% for tag in blogmark.tags.all %}
+        {{ tag.get_reltag }}{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+  {% endif %}
+
+{% endblock sidebar %}

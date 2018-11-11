@@ -11,7 +11,7 @@
 {% block sidebar %}
   <p>
     This is <strong>{{ entry.title|typogrify }}</strong> by Jacob Kaplan-Moss,
-    posted on <a href="/{{ entry.created|date:"Y/M/j/" }}">{{ entry.created|date:"jS F Y" }}</a>.
+    posted on <a href="{% url 'blog_archive_day' entry.created.year entry.created.month entry.created.day %}">{{ entry.created|date:"jS F Y" }}</a>.
   </p>
 
   {% if entry.tags.count %}

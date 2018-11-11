@@ -36,10 +36,6 @@ BLACKLISTED_TAGS = ('quora', 'flash', 'resolved', 'recovered')
 
 
 def archive_item(request, year, month, day, slug):
-    if day.startswith('0'):
-        day = day.lstrip('0')
-        return Redirect('/%s/%s/%s/%s/' % (year, month, day, slug))
-
     # This could be a quote OR link OR entry
     for content_type, model in (
         ('blogmark', Blogmark),
@@ -48,9 +44,9 @@ def archive_item(request, year, month, day, slug):
     ):
         try:
             obj = get_object_or_404(model,
-                created__year=int(year),
-                created__month=MONTHS_3_REV[month.lower()],
-                created__day=int(day),
+                created__year=year,
+                created__month=month,
+                created__day=day,
                 slug=slug
             )
         except Http404:
@@ -114,7 +110,6 @@ def find_current_tags(num=5):
 
 
 def archive_year(request, year):
-    year = int(year)
     # Display list of months
     # each with count of blogmarks/photos/entries/quotes
     # We can cache this page heavily, so don't worry too much
@@ -163,9 +158,6 @@ def archive_year(request, year):
 
 
 def archive_month(request, year, month):
-    year = int(year)
-    month = MONTHS_3_REV[month.lower()]
-
     def by_date(objs):
         lookup = {}
         for obj in objs:
@@ -197,13 +189,8 @@ def archive_month(request, year, month):
 
 
 def archive_day(request, year, month, day):
-    if day.startswith('0'):
-        day = day.lstrip('0')
-        return Redirect('/%s/%s/%s/' % (year, month, day))
     context = {}
-    context['date'] = datetime.date(
-        int(year), MONTHS_3_REV[month.lower()], int(day)
-    )
+    context['date'] = datetime.date(year, month, day)
     items = [] # Array of {'type': , 'obj': }
     count = 0
     for name, model in (
@@ -211,9 +198,9 @@ def archive_day(request, year, month, day):
         ('quotation', Quotation), ('photo', Photo)
     ):
         filt = model.objects.filter(
-            created__year=int(year),
-            created__month=MONTHS_3_REV[month.lower()],
-            created__day=int(day)
+            created__year=year,
+            created__month=month,
+            created__day=day
         ).order_by('created')
         if (name == 'photo'):
             filt = filt[:25]
@@ -222,9 +209,9 @@ def archive_day(request, year, month, day):
         items.extend([{'type': name, 'obj': obj} for obj in context[name]])
     # Now do photosets separately because they have no created field
     context['photoset'] = list(Photoset.objects.filter(
-        primary__created__year=int(year),
-        primary__created__month=MONTHS_3_REV[month.lower()],
-        primary__created__day=int(day)
+        primary__created__year=year,
+        primary__created__month=month,
+        primary__created__day=day
     ))
     for photoset in context['photoset']:
         photoset.created = photoset.primary.created

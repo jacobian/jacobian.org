@@ -38,10 +38,8 @@ INSTALLED_APPS = (
     "django.contrib.redirects",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-
     "micawber.contrib.mcdjango",
     "typogrify",
-
     "blog",
     "feedstats",
     "speaking_portfolio",
@@ -50,6 +48,7 @@ INSTALLED_APPS = (
 MIDDLEWARE = (
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -60,9 +59,6 @@ MIDDLEWARE = (
 if DEBUG:
     MIDDLEWARE = ("debug_toolbar.middleware.DebugToolbarMiddleware",) + MIDDLEWARE
     INSTALLED_APPS += ("debug_toolbar",)
-else:
-    MIDDLEWARE += ("whitenoise.middleware.WhiteNoiseMiddleware",)
-
 
 # Sentry
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
@@ -139,6 +135,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static/"),)
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+
+WHITENOISE_ROOT = os.path.abspath(os.path.join(STATICFILES_DIRS[0], "root-files"))
 
 # urls.W002
 # Your URL pattern '^/?archive/(\d{4})/(\d{2})/(\d{2})/$' has a regex beginning

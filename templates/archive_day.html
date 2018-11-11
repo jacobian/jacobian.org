@@ -10,7 +10,8 @@
 
 {% block sidebar %}
   <h4>
-   <a href="/{{ date|date:"Y" }}/">{{ date|date:"Y" }}</a> &raquo; <a href="{{ date|date:"/Y/M/" }}">{{ date|date:"F" }}</a>
+   <a href="{% url 'blog_archive_year' date.year %}">{{ date|date:"Y" }}</a> &raquo;
+   <a href="{% url 'blog_archive_month' date.year date.month %}">{{ date|date:"F" }}</a>
   </h4>
   {% load blog_calendar %}
   {% render_calendar date %}

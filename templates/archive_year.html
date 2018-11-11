@@ -27,7 +27,7 @@
       {% if other_year.year == year %}
         <strong>{{ year }}</strong>
       {% else %}
-        <a href="/{{ other_year|date:"Y" }}/">{{ other_year|date:"Y" }}</a>
+        <a href="{% url 'blog_archive_year' other_year.year %}">{{ other_year|date:"Y" }}</a>
       {% endif %}
     </p>
   {% endfor %}
