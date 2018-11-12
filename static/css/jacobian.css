@@ -76,6 +76,29 @@ pre > code, pre.literal-block
     padding: 0.5rem;
 }
 
+nav {
+    font-family: 'Roboto Condense', sans-serif;
+    margin-top: 1em;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+
+nav ul {
+    margin-bottom: 0;
+}
+
+nav li {
+    display: inline;
+}
+
+nav li a {
+    box-shadow: none;
+    padding: 1em;
+    border-radius: 4px;
+}
+
 
 /*** header ************************************************/
 
@@ -101,29 +124,6 @@ header h1 {
     margin-bottom: 0;
     padding-left: 8px;
     font-weight: bold;
-}
-
-header nav {
-    font-family: 'Roboto Condense', sans-serif;
-    margin-top: 1em;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-
-header nav ul {
-    margin-bottom: 0;
-}
-
-header nav li {
-    display: inline;
-}
-
-header nav li a {
-    box-shadow: none;
-    padding: 1em;
-    border-radius: 4px;
 }
 
 header h1 a, header h1 a:visited {

@@ -5,6 +5,7 @@
   <title>{% block title %}Jacob Kaplan-Moss{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Merriweather:400,400i,700,700i|Roboto+Condensed:300,400,700|Source+Code+Pro:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static "css/normalize.css" %}">
   <link rel="stylesheet" href="{% static "css/skeleton.css" %}">
   <link rel="stylesheet" href="{% static "css/jacobian.css" %}">
@@ -20,6 +21,8 @@
             <li><a href="{% url 'entry_archive' %}">Writing</a></li>
             <li><a href="{% url 'speaking_portfolio_index' %}">Speaking</a></li>
             <li><a href="{% url 'tag_index' %}">Archive</a></li>
+            <li><a href="https://github.com/jacobian" title="github"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://twitter.com/jacobian" title="twitter"><i class="fab fa-twitter"></i></a></li>
           </ul>
         </nav>
       {% endblock %}
@@ -33,6 +36,16 @@
   <div class="footer-wrap">
     <footer>
       <p>&copy; Jacob Kaplan-Moss</p>
+      <nav>
+        <ul>
+          <li><a href="https://github.com/jacobian" title="github"><i class="fab fa-github"></i></a></li>
+          <li><a href="https://twitter.com/jacobian" title="twitter"><i class="fab fa-twitter"></i></a></li>
+          <li><a href="https://instagram.com/jacobian" title="instagram"><i class="fab fa-instagram"></i></a></li>
+          <li><a href="https://pinboard.com/jacobian" title="pinboard"><i class="fas fa-bookmark"></i></a></li>
+          <li><a href="https://flickr.com/jacobian" title="flickr"><i class="fab fa-twitter"></i></a></li>
+          <li><a href="https://linkedin.com/in/jacobian" title="linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+      </nav>
     </footer>
   </div>
 
