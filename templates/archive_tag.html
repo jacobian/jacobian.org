@@ -1,0 +1,27 @@
+{% extends "base_2col.html" %}
+
+{% block title %}Tagged {{ tags|join:" and " }}{% endblock %}
+
+{% block content %}
+  <h2>{{ total }} item{{ total|pluralize }} tagged “{{ tags|join:"” and “" }}”</h2>
+  {% load blog_tags %}
+  {% blog_mixed_list_with_dates items %}
+  {% include "includes/pagination.html" %}
+{% endblock %}
+
+{% block sidebar %}
+  <p>
+    This is everything tagged
+    {% for tag in tags %}
+      <a href="{% url 'tag_detail' tag %}">{{ tag }}</a>{% if not forloop.last %} and {% endif %}
+    {% endfor %}
+    on jacobian.org.
+  </p>
+  {% if only_one_tag and tag.get_related_tags %}
+      <p>Related:
+          {% for t in tag.get_related_tags %}
+              <a href="/tags/{{ t }}/">{{ t }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+      </p>
+  {% endif %}
+{% endblock %}
