@@ -22,7 +22,7 @@ urlpatterns = [
         name="blog_archive_day",
     ),
     path(
-        "<year:year>/<month:month>/<day:day>/<slug:slug>",
+        "<year:year>/<month:month>/<day:day>/<slug:slug>/",
         blog_views.archive_item,
         name="blog_archive_item",
     ),
