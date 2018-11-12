@@ -77,36 +77,10 @@
       <h2>
         <span>Elsewhere</span>
       </h2>
-
-      {% for item in elsewhere %}
-        {% if item.type == "blogmark" %}
-          <h5>
-            📌 <a href="{{ item.link_url }}">{{ item.link_title }}</a>
-            {% if item.via_url %}
-              (<a href="{{ item.via_url }}" title="{{ item.via_title }}">via</a>)
-            {% endif %}
-          </h5>
-          <p class="summary">
-            {{ item.commentary|typogrify }}
-            <a href="{{ item.get_absolute_url }}" rel="bookmark">#</a>
-          </p>
-
-        {% elif item.type == "quotation" %}
-          <blockquote><p>{{ item.quotation|typogrify }}</p></blockquote>
-          <p class="cite">&mdash;
-            {% if item.source_url %}
-              <a href="{{ item.source_url }}">{{ item.source }}</a>
-            {% else %}
-              {{ item.source }}
-            {% endif %}
-            <a href="{{ item.get_absolute_url }}" rel="bookmark">#</a>
-          </p>
-        {% else %}
-          <!-- !!! unknown type: {{ item.type }} -->
-        {% endif %}
-
-      {% endfor %}
+      {% load blog_tags %}
+      {% blog_mixed_list elsewhere %}
     </div> <!-- elsewhere -->
+
     <div class="readmore">
       <a href="#">Elsewhere archive &rarr;</a>
     </div>

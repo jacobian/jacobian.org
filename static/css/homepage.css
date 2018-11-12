@@ -47,6 +47,8 @@
 
 .splash h3, .splash h4, .splash h5 { margin-bottom: 0; }
 
+.splash h5 { margin-top: 1em; }
+
 .splash main blockquote { margin: 0; }
 .splash main blockquote p {
     margin: 1em 0 0 0;

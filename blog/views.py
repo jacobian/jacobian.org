@@ -71,6 +71,9 @@ def index(request):
     elsewhere = sorted(list(blogmarks) + list(quotations), key=attrgetter('created'), reverse=True)
     elsewhere = list(elsewhere)[:constance_config.HOMEPAGE_NUM_ELSEWHERE]
 
+    # Massage elsewhere data into format suitable for {% blog_mixed_list %}
+    elsewhere = [{"type": o.type, "obj": o, "date": o.created} for o in elsewhere]
+
     future_talks = Presentation.objects.filter(date__gt=now().date()).order_by('date')[:constance_config.HOMEPAGE_NUM_TALKS]
     past_talks = Presentation.objects.filter(date__lte=now().date()).order_by('-date')[:constance_config.HOMEPAGE_NUM_TALKS]
     talks = (list(future_talks) + list(past_talks))[:constance_config.HOMEPAGE_NUM_TALKS]
