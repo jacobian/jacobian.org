@@ -19,7 +19,7 @@ from django.db.models.functions import TruncMonth, TruncYear
 from django.http import Http404, HttpResponse
 from django.http import HttpResponsePermanentRedirect as Redirect
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.timezone import now
 from django.views.decorators.cache import never_cache
 
@@ -553,16 +553,7 @@ def tools_search_tags(request):
     }), content_type='application/json')
 
 
-# Redirects for ancient patterns
-# /archive/2002/10/24/
-def archive_day_redirect(request, yyyy, mm, dd):
-    return Redirect('/%s/%s/%d/' % (
-        yyyy, MONTHS_3_REV_REV[int(mm)].title(), int(dd)
-    ))
-
-
-# /archive/2003/09/05/listamatic
-def archive_item_redirect(request, yyyy, mm, dd, slug):
-    return Redirect('/%s/%s/%d/%s' % (
-        yyyy, MONTHS_3_REV_REV[int(mm)].title(), int(dd), slug
-    ))
+# Redirects for old patterns
+# /writing/<slug>/ --> /YYYY/mmm/ddd/slug
+def redirect_old_blog_urls(request, slug):
+    return redirect(to=get_object_or_404(Entry, slug=slug), permanent=True)

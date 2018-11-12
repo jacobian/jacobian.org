@@ -40,6 +40,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("speaking/", include("speaking_portfolio.urls")),
     path("writing/", blog_views.entry_archive, name="entry_archive"),
+    path("writing/<slug:slug>/", blog_views.redirect_old_blog_urls),
 ]
 if settings.DEBUG:
     import debug_toolbar
