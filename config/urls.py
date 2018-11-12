@@ -44,6 +44,9 @@ urlpatterns = [
     path("writing/", blog_views.entry_archive, name="entry_archive"),
     path("writing/<slug:slug>/", blog_views.redirect_old_blog_urls),
     path("feed.xml", blog_views.redirect_old_feed),
+    path("feed/", blog_views.redirect_old_feed),
+    path("rss/summary/", blog_views.redirect_old_feed),
+    path("rss/full/", blog_views.redirect_old_feed),
 ]
 if settings.DEBUG:
     import debug_toolbar
