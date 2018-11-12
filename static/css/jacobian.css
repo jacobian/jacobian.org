@@ -151,18 +151,13 @@ aside p {
     margin-bottom: 1em;
 }
 
-.footer-wrap {
-    background-color: black;
-    padding: 4em 0;
-}
 
 footer {
-    margin: 0 auto;
+    margin: 10em auto;
     font-size: 0.7em;
     color: #4b4237;
     text-align: center;
 }
-footer
 
 /*** calendar (date archive pages) ************************************************/
 
