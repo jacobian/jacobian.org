@@ -10,6 +10,7 @@ from collections import Counter
 import CloudFlare
 import requests
 from bs4 import BeautifulSoup as Soup
+from constance import config as constance_config
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.postgres.search import SearchQuery, SearchRank
@@ -62,21 +63,17 @@ def archive_item(request, year, month, day, slug):
     # If we get here, non of the views matched
     raise Http404
 
-HOMEPAGE_NUM_ENTRIES = 5
-HOMEPAGE_NUM_ELSEWHERE = 7
-HOMEPAGE_NUM_TALKS = 6
-
 def index(request):
-    entries = Entry.objects.prefetch_related('tags')[:HOMEPAGE_NUM_ENTRIES]
+    entries = Entry.objects.prefetch_related('tags')[:constance_config.HOMEPAGE_NUM_ENTRIES]
 
     blogmarks = Blogmark.objects.order_by('-created').prefetch_related('tags')[:50]
     quotations = Quotation.objects.order_by('-created').prefetch_related('tags')[:50]
     elsewhere = sorted(list(blogmarks) + list(quotations), key=attrgetter('created'), reverse=True)
-    elsewhere = list(elsewhere)[:HOMEPAGE_NUM_ELSEWHERE]
+    elsewhere = list(elsewhere)[:constance_config.HOMEPAGE_NUM_ELSEWHERE]
 
-    future_talks = Presentation.objects.filter(date__gt=now().date()).order_by('date')[:HOMEPAGE_NUM_TALKS]
-    past_talks = Presentation.objects.filter(date__lte=now().date()).order_by('-date')[:HOMEPAGE_NUM_TALKS]
-    talks = (list(future_talks) + list(past_talks))[:HOMEPAGE_NUM_TALKS]
+    future_talks = Presentation.objects.filter(date__gt=now().date()).order_by('date')[:constance_config.HOMEPAGE_NUM_TALKS]
+    past_talks = Presentation.objects.filter(date__lte=now().date()).order_by('-date')[:constance_config.HOMEPAGE_NUM_TALKS]
+    talks = (list(future_talks) + list(past_talks))[:constance_config.HOMEPAGE_NUM_TALKS]
 
     response = render(request, 'homepage.html', {
         'entries': entries,

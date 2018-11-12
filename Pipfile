@@ -27,6 +27,7 @@ typogrify = "*"
 "jinja2" = "*"
 django-postgres-unlimited-varchar = "*"
 micawber = "*"
+django-constance = {extras = ["database"]}
 
 [dev-packages]
 django-debug-toolbar = "*"
