@@ -62,6 +62,20 @@ h5 {
     white-space: nowrap;
 }
 
+/* reST-converted entries use pre.literal-block instead of pre>code */
+pre, code, tt {
+    font-family: 'Source Code Pro', monospace;
+    background-color: #4b42370e;
+}
+pre > code, pre.literal-block
+{
+    display: block;
+    white-space: pre;
+    margin-left: 1rem 2.5rem;
+    padding: 0.5rem;
+}
+
+
 /*** header ************************************************/
 
 .header-wrap {
