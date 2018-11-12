@@ -1,18 +1,20 @@
-from django.db import models
-from django.utils.dates import MONTHS_3
-from django.utils.safestring import mark_safe
-from django.urls import reverse
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.postgres.fields import JSONField
-from django.contrib.postgres.search import SearchVectorField
-from django.contrib.postgres.indexes import GinIndex
-from django.utils.html import escape, strip_tags
-from collections import Counter
-import re
-import arrow
 import datetime
+import re
+from collections import Counter
 from xml.etree import ElementTree
+
+import arrow
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVectorField
+from django.db import models
+from django.urls import reverse
+from django.utils import timezone
+from django.utils.dates import MONTHS_3
+from django.utils.html import escape, strip_tags
+from django.utils.safestring import mark_safe
 
 tag_re = re.compile('^[a-z0-9]+$')
 
@@ -96,10 +98,8 @@ class BaseModel(models.Model):
         return ' '.join(t.tag for t in self.tags.all())
 
     def get_absolute_url(self):
-        return reverse('blog_archive_item', args=[
-            self.created.year, self.created.month,
-            self.created.day, self.slug
-        ])
+        d = timezone.localdate(self.created)
+        return reverse('blog_archive_item', args=[d.year, d.month, d.day, self.slug])
 
     def edit_url(self):
         return "/admin/blog/%s/%d/" % (
