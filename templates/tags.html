@@ -1,8 +1,9 @@
 {% extends "base_2col.html" %}
 
-{% block title %}Tags | {{ block.super }}{% endblock %}
+{% block title %}Full Archive | {{ block.super }}{% endblock %}
 
 {% block content %}
+  <h2>Archive</h2>
 
   <form action="{% url 'search' %}" method="GET">
     <input type="search" class="search-input" name="q" value="" style="width: 80%">
@@ -15,4 +16,14 @@
 
 {% block sidebar %}
   <p>You can view the intersection of up to three tags by navigating to <samp>/tags/tag1+tag2/</samp>.</p>
+  <h3>Archive by year:</h3>
+  {% for other_year in years_with_content reversed %}
+    <p>
+      {% if other_year.year == year %}
+        <strong>{{ year }}</strong>
+      {% else %}
+        <a href="{% url 'blog_archive_year' other_year.year %}">{{ other_year|date:"Y" }}</a>
+      {% endif %}
+    </p>
+  {% endfor %}
 {% endblock %}

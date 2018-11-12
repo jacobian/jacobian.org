@@ -46,6 +46,7 @@ h2 {
 }
 h3 {
     font-size: 2.5rem;
+    font-weight: normal;
 }
 h4 {
     font-size: 2rem;
@@ -103,9 +104,13 @@ header h1 {
 }
 
 header nav {
+    font-family: 'Roboto Condense', sans-serif;
     margin-top: 1em;
-    font-size: 1.25em;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
 }
+
 
 header nav ul {
     margin-bottom: 0;
@@ -113,6 +118,12 @@ header nav ul {
 
 header nav li {
     display: inline;
+}
+
+header nav li a {
+    box-shadow: none;
+    padding: 1em;
+    border-radius: 4px;
 }
 
 header h1 a, header h1 a:visited {
@@ -133,18 +144,25 @@ main {
 aside {
     color: #4b4237;
     font-size: 0.8em;
+    padding: 0 6px;
 }
 
 aside p {
     margin-bottom: 1em;
 }
 
+.footer-wrap {
+    background-color: black;
+    padding: 4em 0;
+}
+
 footer {
-    margin: 10em auto;
+    margin: 0 auto;
     font-size: 0.7em;
     color: #4b4237;
     text-align: center;
 }
+footer
 
 /*** calendar (date archive pages) ************************************************/
 
@@ -207,7 +225,14 @@ form.search {
 /*** overrides for wider screens ************************************************/
 
 @media only screen and (min-width: 768px) {
-    header h1 {
+    .twocol header {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+    .twocol header nav {
+        text-align: right;
+    }
+    .twocol header h1 {
         font-size: 4rem;
     }
     .twocol .main-wrap {
@@ -221,5 +246,11 @@ form.search {
         border-left: 1px #4b4237 dotted;
         padding-left: 20px;
     }
+}
 
+@media only screen and (max-width: 768px) {
+    aside {
+        border-top: 1px #4b4237 dotted;
+        padding-top: 2em;
+    }
 }
