@@ -29,7 +29,7 @@ urlpatterns = [
     path("search/", blog_views.search, name="search"),
     path("tags/", blog_views.tag_index, name="tag_index"),
     path("tags/<tag>/", blog_views.archive_tag, name="tag_detail"),
-    path("atom/entries/", count_subscribers(feeds.Entries().__call__)),
+    path("atom/entries/", count_subscribers(feeds.Entries().__call__), name="blog_feed"),
     path("atom/links/", count_subscribers(feeds.Blogmarks().__call__)),
     path("atom/everything/", count_subscribers(feeds.Everything().__call__)),
     path("sitemap.xml", feeds.sitemap),
@@ -41,6 +41,7 @@ urlpatterns = [
     path("speaking/", include("speaking_portfolio.urls")),
     path("writing/", blog_views.entry_archive, name="entry_archive"),
     path("writing/<slug:slug>/", blog_views.redirect_old_blog_urls),
+    path("feed.xml", blog_views.redirect_old_feed)
 ]
 if settings.DEBUG:
     import debug_toolbar

@@ -557,3 +557,6 @@ def tools_search_tags(request):
 # /writing/<slug>/ --> /YYYY/mmm/ddd/slug
 def redirect_old_blog_urls(request, slug):
     return redirect(to=get_object_or_404(Entry, slug=slug), permanent=True)
+
+def redirect_old_feed(request):
+    return redirect(to="blog_feed", permanent=True)

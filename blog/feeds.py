@@ -7,7 +7,7 @@ from blog.models import Entry, Blogmark, Quotation
 class Base(Feed):
     feed_type = Atom1Feed
     link = "/"
-    author_name = "Simon Willison"
+    author_name = "Jacob Kaplan-Moss"
 
     def __call__(self, request, *args, **kwargs):
         response = super(Base, self).__call__(request, *args, **kwargs)
@@ -29,7 +29,7 @@ class Base(Feed):
 
 
 class Entries(Base):
-    title = "Simon Willison's Weblog: Entries"
+    title = "Jacob Kaplan-Moss: Writing"
     ga_source = 'entries'
 
     def items(self):
@@ -45,7 +45,7 @@ class Entries(Base):
 
 
 class Blogmarks(Base):
-    title = "Simon Willison's Weblog: Blogmarks"
+    title = "Jacob Kaplan-Moss: Blogmarks"
     description_template = "feeds/blogmark.html"
     ga_source = 'blogmarks'
 
@@ -59,7 +59,7 @@ class Blogmarks(Base):
 
 
 class Everything(Base):
-    title = "Simon Willison's Weblog"
+    title = "Jacob Kaplan-Moss"
     description_template = "feeds/everything.html"
     ga_source = 'everything'
 
