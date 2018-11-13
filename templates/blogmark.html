@@ -4,13 +4,21 @@
 
 {% block content %}
   {% load entry_tags typogrify_tags %}
-  <h2>FIXME</h2>
-{% endblock content %}
+  <h2>
+      📌 <a href="{{ blogmark.link_url }}">{{ blogmark.link_title }}</a>
+      {% if blogmark.via_url %}
+        (<a href="{{ blogmark.via_url }}" title="{{ blogmark.via_title }}">via</a>)
+      {% endif %}
+  </h2>
+    {% if blogmark.commentary %}
+      <p>{{ blogmark.commentary|typography }}</p>
+    {% endif %}
+  {% endblock content %}
 
 {% block sidebar %}
   <p>
-    This is <strong>{{ blogmark.link_title|typogrify }}</strong> by Jacob Kaplan-Moss,
-    linked on <a href="/{{ blogmark.created|date:"Y/M/j/" }}">{{ blogmark.created|date:"jS F Y" }}</a>.
+    This is a link to <strong>{{ blogmark.link_title|typogrify }}</strong>,
+    bookmarked on <a href="/{{ blogmark.created|date:"Y/M/j/" }}">{{ blogmark.created|date:"jS F Y" }}</a>.
   </p>
 
   {% if blogmark.tags.count %}

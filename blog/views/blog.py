@@ -25,7 +25,7 @@ from django.utils.timezone import now
 from django.views.decorators.cache import never_cache
 
 from speaking_portfolio.models import Presentation
-from .models import Blogmark, Entry, Photo, Photoset, Quotation, Tag, load_mixed_objects
+from ..models import Blogmark, Entry, Photo, Photoset, Quotation, Tag, load_mixed_objects
 
 MONTHS_3_REV = {
     "jan": 1,

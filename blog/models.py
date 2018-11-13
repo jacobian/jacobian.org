@@ -1,4 +1,3 @@
-import datetime
 import re
 from collections import Counter
 from xml.etree import ElementTree
@@ -80,7 +79,7 @@ class Tag(models.Model):
 
 
 class BaseModel(models.Model):
-    created = models.DateTimeField(default=datetime.datetime.utcnow)
+    created = models.DateTimeField(default=timezone.now)
     tags = models.ManyToManyField(Tag, blank=True)
     slug = models.SlugField(max_length=64)
     metadata = JSONField(blank=True, default=dict)

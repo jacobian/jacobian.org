@@ -1,0 +1,34 @@
+{% extends "base_2col.html" %}
+
+{% block link_title %}A quote by {{ quotation.source }} | {{ block.super }}{% endblock link_title %}
+
+{% block content %}
+  {% load entry_tags typogrify_tags %}
+  <blockquote>
+      <p>{{ quotation.quotation|typography }}</p>
+    </blockquote>
+    <p class="cite">&mdash;
+      {% if quotation.source_url %}
+        <a href="{{ quotation.source_url }}">{{ quotation.source }}</a>
+      {% else %}
+        {{ quotation.source }}
+      {% endif %}
+      <a href="{{ quotation.get_absolute_url }}" rel="bookmark">#</a>
+    </p>
+{% endblock content %}
+
+{% block sidebar %}
+  <p>
+    This is a quote by {{ quotation.source }},
+    recorded on <a href="/{{ quotation.created|date:"Y/M/j/" }}">{{ quotation.created|date:"jS F Y" }}</a>.
+  </p>
+
+  {% if quotation.tags.count %}
+    <p>Tagged
+      {% for tag in quotation.tags.all %}
+        {{ tag.get_reltag }}{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+  {% endif %}
+
+{% endblock sidebar %}

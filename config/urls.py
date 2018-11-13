@@ -1,7 +1,8 @@
 from django.urls import path, include
 from django.contrib import admin
 from django.conf import settings
-from blog import views as blog_views
+from blog.views import blog as blog_views
+from blog.views import micropub as micropub_views
 from blog import feeds
 from feedstats.utils import count_subscribers
 from . import url_converters
@@ -47,6 +48,7 @@ urlpatterns = [
     path("feed/", blog_views.redirect_old_feed),
     path("rss/summary/", blog_views.redirect_old_feed),
     path("rss/full/", blog_views.redirect_old_feed),
+    path("micropub", micropub_views.Micropub.as_view(), name="micropub"),
 ]
 if settings.DEBUG:
     import debug_toolbar
