@@ -31,7 +31,7 @@
           {% if entry.summary %}
             {{ entry.summary }}
           {% else %}
-            {{ entry.body|xhtml|first_paragraph|striptags|truncatewords:"50"|typogrify }}
+            {{ entry.body|first_paragraph|striptags|truncatewords:"50"|typogrify }}
           {% endif %}
         </p>
       {% endfor %}

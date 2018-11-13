@@ -7,7 +7,7 @@
 {% block content %}
   {% load entry_tags typogrify_tags %}
   <h2>{{ entry.title|typogrify }}</h2>
-  {{ entry.body|xhtml|typogrify|xhtml2html }}
+  {{ entry.body|typogrify|safe }}
 {% endblock content %}
 
 {% block sidebar %}
