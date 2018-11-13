@@ -2,6 +2,8 @@
 
 {% block title %}{{ entry.title }} | {{ block.super }}{% endblock title %}
 
+{% block extrahead %}{% if entry.extra_head_html %}{{ entry.extra_head_html|safe }}{% endif %}{% endblock extrahead %}
+
 {% block content %}
   {% load entry_tags typogrify_tags %}
   <h2>{{ entry.title|typogrify }}</h2>
