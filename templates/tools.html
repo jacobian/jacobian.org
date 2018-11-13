@@ -1,0 +1,17 @@
+{% extends "base_2col.html" %}
+
+{% block title %}Tools{% endblock %}
+
+{% block content %}
+<h2>Tools</h2>
+
+<p>Currently deployed: <a href="https://github.com/jacobian/jacobian.org/tree/{{ deployed_hash }}">{{ deployed_hash }}</a> (<a href="https://github.com/simonw/simonwillisonblog/compare/{{ deployed_hash }}...master">diff to master</a>)</p>
+
+{% if msg %}<p><strong>{{ msg }}</strong></p>{% endif %}
+
+<form action="{{ request.path }}" method="POST">
+    <input class="button-primary" type="submit" name="purge_all" value="Purge all cache">
+    {% csrf_token %}
+</form>
+
+{% endblock %}
