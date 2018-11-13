@@ -15,5 +15,5 @@ class Command(BaseCommand):
             except Exception as e:
                 print(e)
                 print(entry.title)
-                print('https://simonwillison.com/admin/blog/entry/%d/' % entry.pk)
+                print('https://jacobian.org/admin/blog/entry/%d/' % entry.pk)
                 print()
