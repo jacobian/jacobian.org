@@ -1,11 +1,14 @@
 import requests
 import json
+import logging
 from django.views import View
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.core.exceptions import PermissionDenied
 from django.utils.timezone import now
 from django.utils.text import Truncator, slugify
 from blog.models import Entry
+
+log = logging.getLogger("micropub")
 
 
 class Micropub(View):
@@ -15,6 +18,7 @@ class Micropub(View):
         """
         GET /micropub --> returns various config info
         """
+        log.debug("get micropub q=%s", request.GET.dict())
         return JsonResponse({})
 
     def post(self, request):
@@ -28,6 +32,8 @@ class Micropub(View):
             return HttpResponseBadRequest(
                 f"can't handle content-type: {request.content_type}"
             )
+
+        log.debug("payload=%s", payload)
 
         if "action" in payload:
             return HttpResponseBadRequest(f"can't handle anything other than create")
@@ -64,7 +70,8 @@ class Micropub(View):
             auth_header = "Bearer " + request.POST["access_token"]
 
         if not auth_header:
-            raise PermissionDenied("no auth token")
+            log.info("permission denied: no auth token")
+            raise PermissionDenied()
 
         response = requests.get(
             "https://tokens.indieauth.com/token",
@@ -72,15 +79,23 @@ class Micropub(View):
         )
 
         if response.status_code not in (200, 201):
-            raise PermissionDenied(f"token endpoint returned {response.status_code}")
+            log.info(
+                "permission denied: token endpoint returned %s", response.status_code
+            )
+            raise PermissionDenied()
 
         indieauth = response.json()
         if indieauth["me"].rstrip("/") != "https://jacobian.org":
-            raise PermissionDenied("not me")
+            log.info("permission denied me=%s", indieauth["me"])
+            raise PermissionDenied()
 
         if "create" not in indieauth["scope"]:
-            raise PermissionDenied("lacking create scope")
+            log.info(
+                "permission denied, lacking create scope, scope=%s", indieauth["scope"]
+            )
+            raise PermissionDenied()
 
+        log.info("authorized me=%s", indieauth["me"])
         return indieauth
 
     @classmethod

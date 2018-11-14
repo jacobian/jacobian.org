@@ -38,12 +38,10 @@ INSTALLED_APPS = (
     "django.contrib.redirects",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-
     "micawber.contrib.mcdjango",
     "typogrify",
     "constance",
-    'constance.backends.database',
-
+    "constance.backends.database",
     "blog",
     "feedstats",
     "speaking_portfolio",
@@ -168,11 +166,27 @@ SITE_ID = 1
 
 PINBOARD_API_KEY = os.environ.get("PINBOARD_API_KEY", "")
 
-CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 CONSTANCE_CONFIG = {
-    'HOMEPAGE_NUM_ENTRIES': (5, "Number of blog entries on the home page"),
-    'HOMEPAGE_NUM_ELSEWHERE': (7, "Number of 'elsewhere' links on the home page"),
-    'HOMEPAGE_NUM_TALKS': (6, "Number of talks on the home page"),
+    "HOMEPAGE_NUM_ENTRIES": (5, "Number of blog entries on the home page"),
+    "HOMEPAGE_NUM_ELSEWHERE": (7, "Number of 'elsewhere' links on the home page"),
+    "HOMEPAGE_NUM_TALKS": (6, "Number of talks on the home page"),
 }
 if REDIS_URL:
-    CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
+    CONSTANCE_DATABASE_CACHE_BACKEND = "default"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "heroku": {
+            "format": "source={name} level={levelname} message={message}",
+            "style": "{",
+        }
+    },
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "heroku"}},
+    "loggers": {
+        "": {"handlers": ["console"], "level": "DEBUG"},
+        "django": {"handlers": ["console"], "level": "INFO"},
+    },
+}
