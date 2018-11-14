@@ -9,11 +9,30 @@ from django.utils.text import Truncator, slugify
 from django.utils.html import strip_tags
 from blog.models import Entry
 
+
+class BadRequest(Exception):
+    pass
+
+
 log = logging.getLogger("micropub")
 
 
 class Micropub(View):
     http_method_names = ["get", "post"]
+
+    @classmethod
+    def as_view(klass):
+        view = super().as_view()
+        view.csrf_exempt = True
+        return view
+
+    def dispatch(self, request):
+        """Wrap dispatch() so that we can `raise BadRequest`"""
+        try:
+            return super().dispatch(request)
+        except BadRequest as e:
+            log.debug("bad request", *e.args)
+            return HttpResponseBadRequest(e.args[0])
 
     def get(self, request):
         """
@@ -25,57 +44,41 @@ class Micropub(View):
     def post(self, request):
         self.authorize(request)
 
-        if request.content_type == "application/json":
-            payload = json.loads(request.body)
-        elif request.content_type == "application/x-www-form-urlencoded":
-            log.debug("decoding formdata post=%s", request.POST.dict())
-            payload = self.decode_formdata(request.POST)
-        else:
-            log.debug("invalid content-type=%s", request.content_type)
-            return HttpResponseBadRequest()
-
+        payload = self.parse_payload(request)
         log.debug("payload=%s", payload)
 
         if "action" in payload:
-            return HttpResponseBadRequest(f"can't handle anything other than create")
+            raise BadRequest("can't handle actions yet")
 
         post_type = payload.get("type", ["h-entry"])[0]
         if post_type != "h-entry":
-            return HttpResponseBadRequest(f"only supports h-entry, not {post_type}")
+            raise BadRequest(f"only supports h-entry, not {post_type}")
 
-        # FIXME: This is a sketch; should be substantially more robust
-
-        content = payload["properties"]["content"][0]
-        if type(content) == str:
-            body = f"<p>{content}</p>"
-        elif "html" in content:
-            body = content["html"]
-        else:
-            log.debug("don't know how to handle content=%s", content)
-            return HttpResponseBadRequest()
-
-        if "name" in payload["properties"]:
-            title = payload["properties"]["name"][0]
-        else:
-            title = Truncator(strip_tags(body)).words(15, truncate=" …")
-
-        slug = payload["properties"].get("mp-slug", [slugify(title)])[0][:50]
-
-        e = Entry.objects.create(
-            created=now(),
-            title=title,
-            body=body,
-            slug=slug,
-            metadata={"micropub_payload": payload},
-        )
+        entry = self.construct_entry(payload)
+        entry.save()
 
         response = HttpResponse(status=201)
-        response["Location"] = request.build_absolute_uri(e.get_absolute_url())
+        response["Location"] = request.build_absolute_uri(entry.get_absolute_url())
         return response
+
+    def parse_payload(self, request):
+        """
+        Parse out the micropub payload from the request, which can be
+        either JSON (easy) or form-data (a bit harder).
+
+        TODO: multipart/form-data, which is for file uploads.
+        """
+        if request.content_type == "application/json":
+            return json.loads(request.body)
+        elif request.content_type == "application/x-www-form-urlencoded":
+            log.debug("decoding formdata post=%s", request.POST.dict())
+            return self.decode_formdata(request.POST)
+        else:
+            raise BadRequest("invalid content-type=%s", request.content_type)
 
     def decode_formdata(self, post):
         """
-        Decode form-encoded microformat into a microformat dict
+        Decode form-encoded micropub into a microformat dict
         """
         mf = {
             "type": ["h-" + post.get("h", "entry")],
@@ -88,6 +91,41 @@ class Micropub(View):
             mf["properties"][key.replace("[]", "")] = post.getlist(key)
 
         return mf
+
+    def construct_entry(self, h_entry):
+        """
+        Turn an h-entry document into an Entry object.
+
+        Doesn't save it, mostly to make testing easier.
+
+        FIXME: I wrote this just by looking at what various clients send;
+        I should read the spec and see what all else is possible. e.g. can
+        bodies be markdown? other formats?
+        """
+
+        content = h_entry["properties"]["content"][0]
+        if type(content) == str:
+            body = f"<p>{content}</p>"
+        elif "html" in content:
+            body = content["html"]
+        else:
+            log.debug("don't know how to handle content=%s", content)
+            return HttpResponseBadRequest()
+
+        if "name" in h_entry["properties"]:
+            title = h_entry["properties"]["name"][0]
+        else:
+            title = Truncator(strip_tags(body)).words(15, truncate=" …")
+
+        slug = h_entry["properties"].get("mp-slug", [slugify(title)])[0][:50]
+
+        return Entry(
+            created=now(),
+            title=title,
+            body=body,
+            slug=slug,
+            metadata={"h_entry": h_entry},
+        )
 
     def authorize(self, request):
         auth_header = request.META.get("HTTP_AUTHORIZATION", "")
@@ -123,8 +161,3 @@ class Micropub(View):
         log.info("authorized me=%s", indieauth["me"])
         return indieauth
 
-    @classmethod
-    def as_view(klass):
-        view = super().as_view()
-        view.csrf_exempt = True
-        return view
