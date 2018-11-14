@@ -186,7 +186,8 @@ LOGGING = {
     },
     "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "heroku"}},
     "loggers": {
-        "": {"handlers": ["console"], "level": "DEBUG"},
-        "django": {"handlers": ["console"], "level": "INFO"},
+        "": {"handlers": ["console"], "level": "INFO"},
+        "django": {"handlers": ["console"], "level": "INFO", "propagate": False},
+        "micropub": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
     },
 }
