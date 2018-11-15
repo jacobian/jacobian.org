@@ -35,6 +35,8 @@ django-debug-toolbar = "*"
 jupyterlab = "*"
 docutils = "*"
 feedparser = "*"
+lxml = "*"
+cssselect = "*"
 
 [requires]
 python_version = "3.6"
