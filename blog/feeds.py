@@ -95,7 +95,7 @@ def sitemap(request):
     ]
     for klass in (Entry, Blogmark, Quotation):
         for obj in klass.objects.only('slug', 'created'):
-            url = request.build_absolute_url(obj.get_absolute_url)
+            url = request.build_absolute_uri(obj.get_absolute_url)
             xml.append(f'<url><loc>{url}</loc></url>')
     xml.append('</urlset>')
     return HttpResponse('\n'.join(xml), content_type='application/xml')
