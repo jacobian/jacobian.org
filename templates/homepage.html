@@ -61,10 +61,10 @@
               I gave
             {% endif %}
             at
-            {% if talk.conference_url %}
-              <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
+            {% if talk.conference.link %}
+              <a href="{{ talk.conference.link }}">{{ talk.conference.title }}</a>
             {% else %}
-              {{ talk.conference_title}}
+              {{ talk.conference.title }}
             {% endif %}
           </p>
       {% endfor %}

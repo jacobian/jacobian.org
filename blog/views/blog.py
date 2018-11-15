@@ -25,7 +25,15 @@ from django.utils.timezone import now
 from django.views.decorators.cache import never_cache
 
 from speaking_portfolio.models import Presentation
-from ..models import Blogmark, Entry, Photo, Photoset, Quotation, Tag, load_mixed_objects
+from ..models import (
+    Blogmark,
+    Entry,
+    Photo,
+    Photoset,
+    Quotation,
+    Tag,
+    load_mixed_objects,
+)
 
 MONTHS_3_REV = {
     "jan": 1,
@@ -93,15 +101,24 @@ def index(request):
     # Massage elsewhere data into format suitable for {% blog_mixed_list %}
     elsewhere = [{"type": o.type, "obj": o, "date": o.created} for o in elsewhere]
 
-    future_talks = Presentation.objects.filter(date__gt=now().date()).order_by("date")[
-        : constance_config.HOMEPAGE_NUM_TALKS
-    ]
-    past_talks = Presentation.objects.filter(date__lte=now().date()).order_by("-date")[
-        : constance_config.HOMEPAGE_NUM_TALKS
-    ]
-    talks = (list(future_talks) + list(past_talks))[
-        : constance_config.HOMEPAGE_NUM_TALKS
-    ]
+    nt = constance_config.HOMEPAGE_NUM_TALKS
+
+    future_talks = (
+        Presentation.objects.select_related("conference")
+        .filter(date__gt=now().date())
+        .order_by("date")
+    )
+    future_talks = future_talks[:nt]
+
+    past_talks = (
+        Presentation.objects.select_related("conference")
+        .filter(date__lte=now().date())
+        .order_by("-date")
+    )
+    past_talks = past_talks[:nt]
+
+    talks = (list(future_talks) + list(past_talks))
+    talks = talks[:nt]
 
     response = render(
         request,

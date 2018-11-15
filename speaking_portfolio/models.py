@@ -8,6 +8,16 @@ PRESENTATION_TYPE_CHOICES = [
 ]
 
 
+class Conference(models.Model):
+    title = UnlimitedCharField()
+    link = models.URLField(blank=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+
 class Presentation(models.Model):
     title = UnlimitedCharField()
     slug = models.SlugField()
@@ -16,8 +26,9 @@ class Presentation(models.Model):
 
     type = UnlimitedCharField(choices=PRESENTATION_TYPE_CHOICES, default="talk")
 
-    conference_title = UnlimitedCharField()
-    conference_link = models.URLField(blank=True)
+    conference = models.ForeignKey(
+        Conference, related_name="presentations", on_delete=models.CASCADE
+    )
 
     video_link = models.URLField(blank=True)
     slides_link = models.URLField(blank=True)

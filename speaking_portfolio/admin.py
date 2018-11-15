@@ -1,9 +1,15 @@
 from django.contrib import admin
-from .models import Presentation
+from .models import Presentation, Conference
+
+
+@admin.register(Conference)
+class ConferenceAdmin(admin.ModelAdmin):
+    ordering = ["-start_date", "title"]
+    list_display = ["title", "link", "start_date"]
 
 
 @admin.register(Presentation)
 class PresentationAdmin(admin.ModelAdmin):
     ordering = ["-date"]
-    list_display = ["title", "date", "type", "conference_title"]
+    list_display = ["title", "date", "type", "conference"]
     prepopulated_fields = {"slug": ["title"]}
