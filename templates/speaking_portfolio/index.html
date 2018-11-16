@@ -11,10 +11,10 @@
       {% for talk in future_presentations %}
         <li>
           <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a> at
-          {% if talk.conference_url %}
-            <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
+          {% if talk.conference.link %}
+            <a href="{{ talk.conference.link }}">{{ talk.conference.title }}</a>
           {% else %}
-            {{ talk.conference_title}}
+            {{ talk.conference.title }}
           {% endif %}
         </li>
       {% endfor %}
@@ -30,10 +30,10 @@
         {% for talk in year_group.list %}
           <li>
             <a href="{{ talk.get_absolute_url }}">{{ talk.title }}</a> at
-            {% if talk.conference_url %}
-              <a href="{{ talk.conference_url }}">{{ talk.conference_title }}</a>
+            {% if talk.conference.link %}
+              <a href="{{ talk.conference.link }}">{{ talk.conference.title }}</a>
             {% else %}
-              {{ talk.conference_title}}
+              {{ talk.conference.title }}
             {% endif %}
           </li>
         {% endfor %}

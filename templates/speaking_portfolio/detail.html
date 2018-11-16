@@ -9,19 +9,28 @@
   <h2>{{ presentation.title|typogrify }}</h2>
   {% if presentation.description %}<p>{{ presentation.description|linebreaks }}</p>{% endif %}
 
-  {% if presentation.video_link %}
-    {{ presentation.video_link|oembed:"600" }}
-  {% endif %}
+  {% for coverage in presentation.coverage.all %}
+    <div class="coverage-item coverage-{{ coverage.type }}">
+      <h3>
+        <i class="{{ coverage.icon_class }}"></i>
+        <a href="{{ coverage.url }}">{{ coverage.get_type_display }}</a>
+      </h3>
+      {% if coverage.oembed %}
+        {{ coverage.oembed.html|safe }}
+      {% endif %}
+    </div>
+  {% endfor %}
+
 {% endblock content %}
 
 {% block sidebar %}
   <p>
     This is <strong>{{ presentation.title|typogrify }}</strong>
     a talk given by Jacob Kaplan-Moss at
-    {% if presentation.conference_url %}
-        <a href="{{ presentation.conference_url }}">{{ presentation.conference_title }}</a>
+    {% if presentation.conference.link %}
+        <a href="{{ presentation.conference.link }}">{{ presentation.conference.title }}</a>
     {% else %}
-        <strong>{{ presentation.conference_title }}</strong>
+        <strong>{{ presentation.conference.title }}</strong>
     {% endif %}
     on {{ presentation.date|date:"F jS Y" }}.
   </p>

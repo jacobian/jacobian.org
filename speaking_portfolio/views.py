@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 def index(request):
-    talks = Presentation.objects.order_by("-date")
+    talks = Presentation.objects.order_by("-date").select_related("conference")
     return render(
         request,
         "speaking_portfolio/index.html",
@@ -16,6 +16,7 @@ def index(request):
 
 
 def detail(request, slug):
+    qs = Presentation.objects.select_related("conference").prefetch_related("coverage")
     return render(
         request,
         "speaking_portfolio/detail.html",
