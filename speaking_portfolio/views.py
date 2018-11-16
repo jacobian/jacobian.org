@@ -20,5 +20,5 @@ def detail(request, slug):
     return render(
         request,
         "speaking_portfolio/detail.html",
-        {"presentation": get_object_or_404(Presentation, slug=slug)},
+        {"presentation": get_object_or_404(qs, slug=slug)},
     )
