@@ -10,10 +10,10 @@ jobs:
       - checkout
 
       - run:
-        name: "grant access to circle for dep locations"
-        command: |
-          sudo chown -R circleci:circleci /usr/local/bin
-          sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
+          name: "grant access to circle for dep locations"
+          command: |
+            sudo chown -R circleci:circleci /usr/local/bin
+            sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
 
       - restore_cache:
           key: v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
