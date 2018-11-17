@@ -41,4 +41,10 @@ jobs:
           name: "Test"
           command: |
             pipenv run python manage.py collectstatic
-            pipenv run pytest
+            pipenv run pytest --cov-report=xml:test-reports/coverage.xml
+
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
