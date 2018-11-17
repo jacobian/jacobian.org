@@ -1,6 +1,6 @@
 from django.test import TestCase
 from .models import SubscriberCount
-import datetime
+from django.utils import timezone
 
 
 class FeedstatsTests(TestCase):
@@ -14,7 +14,7 @@ class FeedstatsTests(TestCase):
         row = SubscriberCount.objects.all()[0]
         self.assertEqual('/atom/everything/', row.path)
         self.assertEqual(10, row.count)
-        self.assertEqual(datetime.date.today(), row.created.date())
+        self.assertEqual(timezone.now().date(), row.created.date())
         self.assertEqual('Blah (X subscribers)', row.user_agent)
         # If we hit again with the same number, no new record is recorded
         self.client.get('/atom/everything/', HTTP_USER_AGENT='Blah (10 subscribers)')

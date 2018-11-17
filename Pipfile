@@ -37,6 +37,7 @@ docutils = "*"
 feedparser = "*"
 lxml = "*"
 cssselect = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.6"
