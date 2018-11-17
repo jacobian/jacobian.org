@@ -41,7 +41,7 @@ jobs:
           name: "Test"
           command: |
             pipenv run python manage.py collectstatic
-            pipenv run pytest --junbit-xml test-reports/junit/test-results.xml
+            pipenv run pytest --junit-xml test-reports/junit/test-results.xml
 
       - store_test_results:
           path: test-reports
