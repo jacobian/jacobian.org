@@ -21,7 +21,7 @@ jobs:
             sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
 
       - restore_cache:
-          key: v2-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          key: v3-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
 
       - run:
           name: "Install pipenv and deps"
@@ -30,12 +30,15 @@ jobs:
             pipenv install --ignore-pipfile --dev
 
       - save_cache:
-          key: v2-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          key: v3-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
             - ".venv"
+            - "staticfiles"
             - "/usr/local/bin"
             - "/usr/local/lib/python3.6/site-packages"
 
       - run:
           name: "Test"
-          command: pipenv run pytest
+          command: |
+            pipenv run python manage.py collectstatic
+            pipenv run pytest
