@@ -2,9 +2,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.6.4
         environment:
           PIPENV_VENV_IN_PROJECT: true
+          DATABASE_URL: postgresql://root@localhost/db?sslmode=disable
+      - image: circleci/postgres:10
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: db
 
     steps:
       - checkout
@@ -22,7 +27,7 @@ jobs:
           name: "Install pipenv and deps"
           command: |
             sudo pip install pipenv
-            pipenv --python /usr/local/bin/python3.7 install --ignore-pipfile --dev
+            pipenv --python install --ignore-pipfile --dev
 
       - save_cache:
           key: v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
