@@ -18,7 +18,7 @@ jobs:
           name: "grant access to circle for dep locations"
           command: |
             sudo chown -R circleci:circleci /usr/local/bin
-            sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
+            sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
 
       - restore_cache:
           key: v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
@@ -34,7 +34,7 @@ jobs:
           paths:
             - ".venv"
             - "/usr/local/bin"
-            - "/usr/local/lib/python3.7/site-packages"
+            - "/usr/local/lib/python3.6/site-packages"
 
       - run:
           name: "Test"
