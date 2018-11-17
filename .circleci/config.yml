@@ -22,7 +22,7 @@ jobs:
           name: "Install pipenv and deps"
           command: |
             sudo pip install pipenv
-            pipenv install --ignore-pipfile --dev
+            pipenv --python /usr/local/bin/python3.7 install --ignore-pipfile --dev
 
       - save_cache:
           key: v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
