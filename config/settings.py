@@ -69,6 +69,7 @@ if SENTRY_DSN:
     RAVEN_CONFIG = {
         "dsn": SENTRY_DSN,
         "release": os.environ.get("HEROKU_SLUG_COMMIT", ""),
+        "environment": ["staging" if STAGING else "production"],
     }
 
 
