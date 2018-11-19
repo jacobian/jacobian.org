@@ -147,6 +147,11 @@ aside {
     padding: 0 6px;
 }
 
+main li, aside li {
+    margin-left: 1em;
+    text-indent: -1em;
+}
+
 aside p {
     margin-bottom: 1em;
 }
