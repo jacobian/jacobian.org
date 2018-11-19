@@ -127,6 +127,8 @@ class Series(models.Model):
     def get_absolute_url(self):
         return reverse('series-detail', args=[self.slug])
 
+    def get_entries_in_order(self):
+        return self.entries.order_by('created')
 
 class Entry(BaseModel):
     title = models.CharField(max_length=255)

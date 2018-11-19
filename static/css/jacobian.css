@@ -156,6 +156,10 @@ aside p {
     margin-bottom: 1em;
 }
 
+aside .series-sidebar li {
+    margin-bottom: 0;
+}
+
 
 footer {
     margin: 10em auto;

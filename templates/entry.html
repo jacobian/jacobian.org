@@ -16,6 +16,23 @@
     posted on <a href="{% url 'blog_archive_day' entry.created.year entry.created.month entry.created.day %}">{{ entry.created|date:"jS F Y" }}</a>.
   </p>
 
+  {% if entry.series %}
+    <p>
+      Part of the {{ entry.series.title|typogrify }} series:
+      <ol class="series-sidebar">
+        {% for other_entry in entry.series.get_entries_in_order %}
+          <li>
+            {% if other_entry == entry %}
+              <b>{{ other_entry.title|typogrify }}</b>
+            {% else %}
+              <a href="{{ other_entry.get_absolute_url }}">{{ other_entry.title|typogrify }}</a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    </p>
+  {% endif %}
+
   {% if entry.tags.count %}
     <p>Tagged
       {% for tag in entry.tags.all %}
