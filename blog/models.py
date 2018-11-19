@@ -14,6 +14,7 @@ from django.utils import timezone
 from django.utils.dates import MONTHS_3
 from django.utils.html import escape, strip_tags
 from django.utils.safestring import mark_safe
+from django_postgres_unlimited_varchar import UnlimitedCharField
 
 tag_re = re.compile('^[a-z0-9]+$')
 
@@ -112,6 +113,20 @@ class BaseModel(models.Model):
             GinIndex(fields=['search_document'])
         ]
 
+class Series(models.Model):
+    title = UnlimitedCharField()
+    slug = models.SlugField()
+    description = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = 'series'
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('series-detail', args=[self.slug])
+
 
 class Entry(BaseModel):
     title = models.CharField(max_length=255)
@@ -123,6 +138,7 @@ class Entry(BaseModel):
     extra_head_html = models.TextField(blank=True, null=True, help_text='''
         Extra HTML to be included in the &lt;head&gt; for this entry
     '''.strip())
+    series = models.ForeignKey(Series, related_name='entries', blank=True, null=True, on_delete=models.SET_NULL)
 
     is_entry = True
 
