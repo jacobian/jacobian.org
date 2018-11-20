@@ -8,6 +8,15 @@ H_ENTRY = {
     "type": ["h-entry"],
     "properties": {"content": ["hi there"], "mp-slug": ["hi"], "name": "hi"},
 }
+H_ENTRY_WITH_TAGS = {
+    "type": ["h-entry"],
+    "properties": {
+        "content": ["this has tags"],
+        "mp-slug": ["hi"],
+        "name": "hi",
+        "category": ["tag1", "tag2"],
+    },
+}
 
 
 def test_micropub_get(rf):
@@ -36,6 +45,7 @@ def test_parse_payload_json(rf):
     assert payload == H_ENTRY
 
 
+@pytest.mark.django_db
 def test_construct_entry(rf):
     request = rf.post(
         "/payload", content_type="application/json", data=json.dumps(H_ENTRY)
@@ -60,7 +70,7 @@ class NoAuthMicropub(micropub_views.Micropub):
 @pytest.mark.django_db
 def test_micropub_post(rf):
     request = rf.post(
-        "/payload", content_type="application/json", data=json.dumps(H_ENTRY)
+        "/micropub", content_type="application/json", data=json.dumps(H_ENTRY)
     )
     view = NoAuthMicropub.as_view()
     response = view(request)
@@ -72,4 +82,17 @@ def test_micropub_post(rf):
     assert entry.body == "<p>" + H_ENTRY["properties"]["content"][0] + "</p>"
 
     assert response["Location"] == request.build_absolute_uri(entry.get_absolute_url())
+
+
+@pytest.mark.django_db
+def test_micropub_post_with_tags(rf):
+    request = rf.post(
+        "/micropub", content_type="application/json", data=json.dumps(H_ENTRY_WITH_TAGS)
+    )
+    NoAuthMicropub.as_view()(request)
+
+    entry = Entry.objects.get(slug=H_ENTRY_WITH_TAGS["properties"]["mp-slug"][0])
+    assert {t.tag for t in entry.tags.all()} == set(
+        H_ENTRY_WITH_TAGS["properties"]["category"]
+    )
 

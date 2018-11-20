@@ -7,7 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.utils.timezone import now
 from django.utils.text import Truncator, slugify
 from django.utils.html import strip_tags
-from blog.models import Entry
+from blog.models import Entry, Tag
 
 
 class BadRequest(Exception):
@@ -55,7 +55,6 @@ class Micropub(View):
             raise BadRequest(f"only supports h-entry, not {post_type}")
 
         entry = self.construct_entry(payload)
-        entry.save()
 
         response = HttpResponse(status=201)
         response["Location"] = request.build_absolute_uri(entry.get_absolute_url())
@@ -119,13 +118,21 @@ class Micropub(View):
 
         slug = h_entry["properties"].get("mp-slug", [slugify(title)])[0][:50]
 
-        return Entry(
+        entry = Entry.objects.create(
             created=now(),
             title=title,
             body=body,
             slug=slug,
             metadata={"h_entry": h_entry},
         )
+
+        tags = [
+            Tag.objects.get_or_create(tag=tag)[0]
+            for tag in h_entry["properties"].get("category", [])
+        ]
+        entry.tags.set(tags)
+
+        return entry
 
     def authorize(self, request):
         auth_header = request.META.get("HTTP_AUTHORIZATION", "")
