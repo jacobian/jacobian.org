@@ -149,7 +149,7 @@ class Micropub(View):
         # my site in my github profile), if we're on staging aiuth won't work.
         # So, alow a bypass of auth in STAGING/DEBUG.
         if settings.STAGING or settings.DEBUG:
-            if getattr(settings, 'INDIEAUTH_BYPASS_SECRET', '') == request.POST["access_token"]:
+            if getattr(settings, 'INDIEAUTH_BYPASS_SECRET', '') == auth_header.replace('Bearer ', ''):
                 return {"me": "https://jacobian.org/"}
 
         response = requests.get(
