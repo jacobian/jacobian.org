@@ -1,13 +1,15 @@
-import requests
 import json
 import logging
-from django.views import View
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
-from django.core.exceptions import PermissionDenied
-from django.utils.timezone import now
-from django.utils.text import Truncator, slugify
-from django.utils.html import strip_tags
+
+import requests
 from blog.models import Entry, Tag
+from django.conf import settings
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.utils.html import strip_tags
+from django.utils.text import Truncator, slugify
+from django.utils.timezone import now
+from django.views import View
 
 
 class BadRequest(Exception):
@@ -143,6 +145,13 @@ class Micropub(View):
             log.info("permission denied: no auth token")
             raise PermissionDenied()
 
+        # Since indieauth requires rel=me links back to the site (i.e. link to
+        # my site in my github profile), if we're on staging aiuth won't work.
+        # So, alow a bypass of auth in STAGING/DEBUG.
+        if settings.STAGING or settings.DEBUG:
+            if getattr(settings, 'INDIEAUTH_BYPASS_SECRET', '') == request.POST["access_token"]:
+                return {"me": "https://jacobian.org/"}
+
         response = requests.get(
             "https://tokens.indieauth.com/token",
             headers={"Authorization": auth_header, "Accept": "application/json"},
@@ -167,4 +176,3 @@ class Micropub(View):
 
         log.info("authorized me=%s", indieauth["me"])
         return indieauth
-

@@ -192,3 +192,6 @@ LOGGING = {
         "micropub": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
     },
 }
+
+if 'INDIEAUTH_BYPASS_SECRET' in os.environ:
+    INDIEAUTH_BYPASS_SECRET = os.environ['INDIEAUTH_BYPASS_SECRET']
