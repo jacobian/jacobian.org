@@ -8,6 +8,10 @@ H_ENTRY = {
     "type": ["h-entry"],
     "properties": {"content": ["hi there"], "mp-slug": ["hi"], "name": "hi"},
 }
+H_ENTRY_NO_NAME = {
+    "type": ["h-entry"],
+    "properties": {"content": ["hi there"], "mp-slug": ["hi"]},
+}
 H_ENTRY_WITH_TAGS = {
     "type": ["h-entry"],
     "properties": {
@@ -56,6 +60,19 @@ def test_construct_entry(rf):
     assert entry.title == H_ENTRY["properties"]["name"][0]
     assert entry.slug == H_ENTRY["properties"]["mp-slug"][0]
     assert entry.body == "<p>" + H_ENTRY["properties"]["content"][0] + "</p>"
+
+
+@pytest.mark.django_db
+def test_construct_entry_no_title(rf):
+    request = rf.post(
+        "/payload", content_type="application/json", data=json.dumps(H_ENTRY_NO_NAME)
+    )
+    view = micropub_views.Micropub()
+    payload = view.parse_payload(request)
+    entry = view.construct_entry(payload)
+    assert entry.title == ""
+    assert entry.slug == H_ENTRY_NO_NAME["properties"]["mp-slug"][0]
+    assert entry.body == "<p>" + H_ENTRY_NO_NAME["properties"]["content"][0] + "</p>"
 
 
 class NoAuthMicropub(micropub_views.Micropub):

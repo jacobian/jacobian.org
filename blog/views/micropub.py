@@ -5,8 +5,7 @@ import requests
 from blog.models import Entry, Tag
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django.utils.html import strip_tags
-from django.utils.text import Truncator, slugify
+from django.utils.text import slugify
 from django.utils.timezone import now
 from django.views import View
 
@@ -114,15 +113,19 @@ class Micropub(View):
             log.debug("don't know how to handle content=%s", content)
             return HttpResponseBadRequest()
 
-        if "name" in h_entry["properties"]:
-            title = h_entry["properties"]["name"][0]
-        else:
-            title = Truncator(strip_tags(body)).words(15, truncate=" …")
+        created = now()
 
+        title = h_entry["properties"].get("name", [""])[0]
         slug = h_entry["properties"].get("mp-slug", [slugify(title)])[0][:50]
+        if "mp-slug" in h_entry["properties"]:
+            slug = h_entry["properties"]["mp-slug"][0]
+        elif title:
+            slug = slugify(title)
+        else:
+            slug = created.strftime("%H-%I-%s")
 
         entry = Entry.objects.create(
-            created=now(),
+            created=created,
             title=title,
             body=body,
             slug=slug,

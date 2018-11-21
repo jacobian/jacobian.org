@@ -12,6 +12,7 @@ from django.utils import timezone
 from django.utils.html import escape, strip_tags
 from django.utils.safestring import mark_safe
 from django_postgres_unlimited_varchar import UnlimitedCharField
+from django.utils.text import Truncator
 
 tag_re = re.compile("^[a-z0-9]+$")
 
@@ -131,7 +132,7 @@ class Series(models.Model):
 
 
 class Entry(BaseModel):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, blank=True)
     body = models.TextField()
     tweet_html = models.TextField(
         blank=True,
@@ -167,7 +168,11 @@ class Entry(BaseModel):
         }
 
     def __str__(self):
-        return self.title
+        return (
+            self.title
+            if self.title
+            else Truncator(strip_tags(self.body)).words(15, truncate=" …")
+        )
 
     class Meta(BaseModel.Meta):
         verbose_name_plural = "Entries"
@@ -208,7 +213,9 @@ class Blogmark(BaseModel):
         return {
             "A": self.link_title,
             "B": " ".join(self.tags.values_list("tag", flat=True)),
-            "C": " ".join([self.commentary, self.link_domain(), (self.via_title or "")]),
+            "C": " ".join(
+                [self.commentary, self.link_domain(), (self.via_title or "")]
+            ),
         }
 
     def __str__(self):
