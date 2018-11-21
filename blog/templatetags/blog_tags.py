@@ -21,27 +21,6 @@ def blog_mixed_list_with_dates(context, items):
     })
     return context
 
-
-@register.inclusion_tag('includes/comments_list.html',
-    takes_context=True)
-def comments_list(context, comments):
-    context.update({
-        'comments': comments,
-        'show_headers': False,
-    })
-    return context
-
-
-@register.inclusion_tag('includes/comments_list.html',
-    takes_context=True)
-def comments_list_with_headers(context, comments):
-    context.update({
-        'comments': comments,
-        'show_headers': True,
-    })
-    return context
-
-
 @register.simple_tag(takes_context=True)
 def page_href(context, page):
     query_dict = context['request'].GET.copy()
