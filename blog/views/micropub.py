@@ -4,7 +4,6 @@ import logging
 import requests
 from blog.models import Entry, Tag
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.utils.html import strip_tags
 from django.utils.text import Truncator, slugify
@@ -44,7 +43,9 @@ class Micropub(View):
         return JsonResponse({})
 
     def post(self, request):
-        self.authorize(request)
+        auth = self.authorize(request)
+        if isinstance(auth, HttpResponse):
+            return auth
 
         payload = self.parse_payload(request)
         log.debug("payload=%s", payload)
@@ -143,13 +144,16 @@ class Micropub(View):
 
         if not auth_header:
             log.info("permission denied: no auth token")
-            raise PermissionDenied()
+            return HttpResponse(status=401)
+
+        print(auth_header)
 
         # Since indieauth requires rel=me links back to the site (i.e. link to
         # my site in my github profile), if we're on staging aiuth won't work.
         # So, alow a bypass of auth in STAGING/DEBUG.
         if settings.STAGING or settings.DEBUG:
-            if getattr(settings, 'INDIEAUTH_BYPASS_SECRET', '') == auth_header.replace('Bearer ', ''):
+            bypass = getattr(settings, "INDIEAUTH_BYPASS_SECRET", "")
+            if bypass == auth_header.replace("Bearer ", ""):
                 return {"me": "https://jacobian.org/"}
 
         response = requests.get(
@@ -161,18 +165,18 @@ class Micropub(View):
             log.info(
                 "permission denied: token endpoint returned %s", response.status_code
             )
-            raise PermissionDenied()
+            return HttpResponse(status=401)
 
         indieauth = response.json()
         if indieauth["me"].rstrip("/") != "https://jacobian.org":
             log.info("permission denied me=%s", indieauth["me"])
-            raise PermissionDenied()
+            return HttpResponse(status=401)
 
         if "create" not in indieauth["scope"]:
             log.info(
                 "permission denied, lacking create scope, scope=%s", indieauth["scope"]
             )
-            raise PermissionDenied()
+            return HttpResponse(status=401)
 
         log.info("authorized me=%s", indieauth["me"])
         return indieauth
