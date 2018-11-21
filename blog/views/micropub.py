@@ -122,7 +122,7 @@ class Micropub(View):
         elif title:
             slug = slugify(title)
         else:
-            slug = created.strftime("%H-%I-%s")
+            slug = created.strftime("%H:%I:%S")
 
         entry = Entry.objects.create(
             created=created,
