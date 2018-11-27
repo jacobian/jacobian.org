@@ -25,15 +25,7 @@ from django.utils.timezone import now
 from django.views.decorators.cache import never_cache
 
 from speaking_portfolio.models import Presentation
-from ..models import (
-    Blogmark,
-    Entry,
-    Photo,
-    Photoset,
-    Quotation,
-    Tag,
-    load_mixed_objects,
-)
+from ..models import Blogmark, Entry, Quotation, Tag, load_mixed_objects
 
 MONTHS_3_REV = {
     "jan": 1,
@@ -161,7 +153,7 @@ def find_current_tags(num=5):
 
 def archive_year(request, year):
     # Display list of months
-    # each with count of blogmarks/photos/entries/quotes
+    # each with count of blogmarks/entries/quotes
     # We can cache this page heavily, so don't worry too much
     months = []
     max_count = 0
@@ -176,15 +168,11 @@ def archive_year(request, year):
         quote_count = Quotation.objects.filter(
             created__year=year, created__month=month
         ).count()
-        photo_count = Photo.objects.filter(
-            created__year=year, created__month=month
-        ).count()
-        month_count = entry_count + link_count + quote_count + photo_count
+        month_count = entry_count + link_count + quote_count
         if month_count:
             counts = [
                 ("entry", entry_count),
                 ("link", link_count),
-                ("photo", photo_count),
                 ("quote", quote_count),
             ]
             counts_not_0 = [p for p in counts if p[1]]
@@ -192,7 +180,7 @@ def archive_year(request, year):
                 {"date": date, "counts": counts, "counts_not_0": counts_not_0}
             )
             max_count = max(
-                max_count, entry_count, link_count, quote_count, photo_count
+                max_count, entry_count, link_count, quote_count
             )
     return render(
         request,
@@ -218,9 +206,6 @@ def archive_month(request, year, month):
     quotations = list(
         Quotation.objects.filter(created__year=year, created__month=month)
     )
-    # photos = list(Photo.objects.filter(
-    #     created__year=year, created__month=month
-    # ))
     # Extract non-de-duped list of ALL tags, for tag cloud
     tags = []
     for obj in entries + blogmarks + quotations:
@@ -247,41 +232,20 @@ def archive_day(request, year, month, day):
         ("blogmark", Blogmark),
         ("entry", Entry),
         ("quotation", Quotation),
-        ("photo", Photo),
     ):
         filt = model.objects.filter(
             created__year=year, created__month=month, created__day=day
         ).order_by("created")
-        if name == "photo":
-            filt = filt[:25]
         context[name] = list(filt)
         count += len(context[name])
         items.extend([{"type": name, "obj": obj} for obj in context[name]])
-    # Now do photosets separately because they have no created field
-    context["photoset"] = list(
-        Photoset.objects.filter(
-            primary__created__year=year,
-            primary__created__month=month,
-            primary__created__day=day,
-        )
-    )
-    for photoset in context["photoset"]:
-        photoset.created = photoset.primary.created
-    count += len(context["photoset"])
-    items.extend([{"type": "photoset", "obj": ps} for ps in context["photoset"]])
+
     if count == 0:
-        raise Http404("No photosets/photos/entries/quotes/links for that day")
+        raise Http404("No entries/quotes/links for that day")
+
     items.sort(key=lambda x: x["obj"].created, reverse=True)
     context["items"] = items
-    photos = Photo.objects.filter(
-        created__year=context["date"].year,
-        created__month=context["date"].month,
-        created__day=context["date"].day,
-    )
-    context["photos"] = photos[:25]
-    # Should we show more_photos ?
-    if photos.count() > 25:
-        context["more_photos"] = photos.count()
+
     return render(request, "archive_day.html", context)
 
 

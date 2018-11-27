@@ -1,10 +1,7 @@
 {% load entry_tags %}
 
 {% for item in items %}
-  {% if item.type == "photoset" %}
-    {# FIXME #}
-
-  {% elif item.type == "entry" %}
+  {% if item.type == "entry" %}
     <h4>
       📝 <a href="{{ item.obj.get_absolute_url }}">{{  item.obj.title|typography }}</a>
     </h4>

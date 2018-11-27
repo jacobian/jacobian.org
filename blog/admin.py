@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.db.models.functions import Length
 from django import forms
 from xml.etree import ElementTree
-from .models import Entry, Tag, Quotation, Blogmark, Series
+from .models import Entry, Tag, Quotation, Blogmark, Series, Photo
 
 
 class BaseAdmin(admin.ModelAdmin):
@@ -45,6 +45,11 @@ class BlogmarkAdmin(BaseAdmin):
     prepopulated_fields = {"slug": ("link_title",)}
 
 
+@admin.register(Photo)
+class PhotoAdmin(BaseAdmin):
+    search_fields = ("tags__tag", "title")
+
+
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     search_fields = ("tag",)
@@ -65,3 +70,4 @@ class TagAdmin(admin.ModelAdmin):
 @admin.register(Series)
 class SeriesAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
+

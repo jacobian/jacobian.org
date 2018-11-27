@@ -29,6 +29,9 @@ django-postgres-unlimited-varchar = "*"
 micawber = "*"
 django-constance = {extras = ["database"]}
 pytest-django = "*"
+pillow = "*"
+django-storages = "*"
+"boto3" = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

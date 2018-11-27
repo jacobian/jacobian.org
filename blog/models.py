@@ -86,6 +86,8 @@ class BaseModel(models.Model):
     created = models.DateTimeField(default=timezone.now)
     tags = models.ManyToManyField(Tag, blank=True)
     slug = models.SlugField(max_length=64)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
     metadata = JSONField(blank=True, default=dict)
     search_document = SearchVectorField(null=True)
     import_ref = models.TextField(max_length=64, null=True, unique=True)
@@ -232,56 +234,19 @@ class Blogmark(BaseModel):
             return "%d words" % count
 
 
-class Photo(models.Model):
-    flickr_id = models.CharField(max_length=32)
-    server = models.CharField(max_length=8)
-    secret = models.CharField(max_length=32)
-    title = models.CharField(max_length=255, blank=True, null=True)
-    longitude = models.CharField(max_length=32, blank=True, null=True)
-    latitude = models.CharField(max_length=32, blank=True, null=True)
-    created = models.DateTimeField()
+class Photo(BaseModel):
+    photo = models.ImageField(upload_to="photos/%Y")
+    title = UnlimitedCharField(blank=True)
 
     def __str__(self):
-        return self.title
+        return self.title if self.title else self.photo.url
 
-    def photopage(self):
-        return "http://www.flickr.com/photo.gne?id=%s" % self.flickr_id
-
-    def url_s(self):
-        return "http://static.flickr.com/%s/%s_%s_s.jpg" % (
-            self.server,
-            self.flickr_id,
-            self.secret,
-        )
-
-    def view_thumb(self):
-        return '<a href="%s"><img src="%s" width="75" height="75" /></a>' % (
-            self.photopage(),
-            self.url_s(),
-        )
-
-
-class Photoset(models.Model):
-    flickr_id = models.CharField(max_length=32)
-    title = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField()
-    photos = models.ManyToManyField(Photo, related_name="in_photoset")
-    primary = models.ForeignKey(Photo, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return "http://www.flickr.com/photos/jacobian/sets/%s/" % self.flickr_id
-
-    def view_thumb(self):
-        return '<a href="%s"><img src="%s" width="75" height="75" /></a>' % (
-            self.primary.photopage(),
-            self.primary.url_s(),
-        )
-
-    def has_map(self):
-        return self.photos.filter(longitude__isnull=False).count() > 0
+    def index_components(self):
+        return {
+            "A": self.title,
+            "B": " ".join(self.tags.values_list("tag", flat=True)),
+            "C": "",
+        }
 
 
 def load_mixed_objects(dicts):
