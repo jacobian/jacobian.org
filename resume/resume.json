@@ -1,0 +1,123 @@
+{
+    "basics": {
+        "name": "Jacob Kaplan-Moss",
+        "label": "Partner, Revolution Systems • Core Team, Django • Formerly 18F, Heroku",
+        "email": "jacob@jacobian.org",
+        "phone": "785-766-2474",
+        "summary": "I helped create Django, the leading Python web framework. I have over a decade of experience in engineering leadership as a consultant, director, and open source leader.",
+        "location": {
+            "region": "Blacksburg, VA"
+        }
+    },
+    "work": [
+        {
+            "company": "Revolution Systems",
+            "position": "Partner",
+            "website": "https://revsys.com/",
+            "startDate": "2009-03-01",
+            "endDate": "2018-11-04",
+            "summary": "Co-owner of Revolution Systems, a consultancy specializing in web application development and scalability. Responsible for consoling with clients on hardening and scaling existing systems, including training, technical team-building, consulting on systems design and high-level strategy. Clients include: LexisNexis, National Geographic, USA Today, DealerTrack, Threadless, Cox Media Group, Urban Airship, Wharton Business School.",
+            "highlights": [
+                "Increased revenues 10-fold since joining as partner.",
+                "Hired and managed a team staff engineers, as well as occasional subcontractors.",
+                "Served as a \u201cvirtual CTO\u201d for several clients, helping to recruit and build teams or engineering organizations as small as 5 and as large as 1,500 staff.",
+                "Trained organizations in Python, Django, PostgreSQL, and related technologies.",
+                "Wrote web applications to client specifications using Python, Django, PostgreSQL, JavaScript, and related technology."
+            ]
+        },
+        {
+            "company": "18F (US General Services Adminstration)",
+            "position": "Engineering Supervisor",
+            "website": "https://18f.gsa.gov/",
+            "startDate": "2016-08-01",
+            "endDate": "2018-05-01",
+            "summary": "Supervisor for one quarter of the Engineering organization, including two assistant managers. Responsible for regular check-ins, feedback on performance, coaching staffing on improving technical and interpersonal skills, performance reviews, and promotions/raises. As part of the Engineering Leadership team, responsible for grading and promotion standards, organization- wide management practices like one-on-ones and feedback mechanisms, hiring, and project staffing.\n",
+            "highlights": [
+                "Re-built Engineering\u2019s hiring process, including creating and improving standard hiring criteria, interview guides, technical assignments for candidates, and training interviewers in interviewing techniques.",
+                "Published these hiring guides publicly to help improve the inclusivity of our hiring process, and spread hiring best practices throughout government and private industry.",
+                "Led hiring for the Engineering chapter, including leading interviews for multiple positions, selecting and training interview panels, and making final hire/no-hire decisions.",
+                "Led the creation and launch of the TTS Bug Bounty, the first security bug bounty run by a civilian government agency. Served as Project Manager post- launch. Published policies and procurement documentation to guide other agencies in adopting their own Bug Bounties.",
+                "Advocated for Bug Bounties and Vulnerability Disclosure Policies throughout government, including briefing the Federal CIO Council and the US Senate Homeland Security & Governmental Affairs Committee."
+            ]
+        },
+        {
+            "company": "18F (US General Services Administration)",
+            "position": "Security Lead",
+            "website": "https://18f.gsa.gov/",
+            "startDate": "2016-03-01",
+            "endDate": "2017-03-01",
+            "summary": "Responsible for improving the security engineering practices at 18F, and providing expert assistance on secure engineering to 18F and our agency partners.\n",
+            "highlights": [
+                "Started and led 18F\u2019s Security Working Group, responsible for tracking and coordinating Information Security-related work across 18F.",
+                "Led hiring for security engineers, a new role at 18F. Created role description, led hiring, and developed performance plans.",
+                "Provided security assistance to various 18F product teams, including cloud.gov, and login.gov.",
+                "Provided security and DevOps consulting to California Child Welfare Digital Services.",
+                "Developed incident response guides for 18F, and for the cloud.gov team. Conducted tabletop exercises to train teams in their use.",
+                "Trained project teams, most notably login.gov, on the use of STRIDE-based threat modeling techniques, and helped them integrate proactive security work into their workflow."
+            ]
+        },
+        {
+            "company": "Heroku",
+            "position": "Director of Security",
+            "website": "https://heroku.com/",
+            "startDate": "2013-05-01",
+            "endDate": "2016-01-01",
+            "summary": "Led Heroku\u2019s Security team. Accountable for information security at the company, as well as responsible for building a security product for millions of apps running on the world\u2019s biggest PaaS. Managed a team of 8-10 security engineers, with major areas of responsibility in Product Security, Incident Response, and Risk/Compliance.\n",
+            "highlights": [
+                "Built Heroku\u2019s formal security programs from scratch, covering Product Security, Incident Response, and Risk/Compliance. ",
+                "Hired and and built a team to support these programs.",
+                "Led substantial gains in our security and compliance posture, which directly translated to increased Enterprise sales and ability to launch new security- focused products.",
+                "Led major engineering initiatives to increase our defensive security, such as adoption of 2FA across all services, increased visibility into production systems, and quicker and easier software updates. These improvements prevented a minor breach from getting worse, and vastly sped up our organizational response to critical security vulnerabilities like Heartbleed.",
+                "Served as Project Manager on many cross-organization projects, including substantial compliance and security projects (Safe Harbor, PCI, HIPAA, internal security benchmarks).",
+                "As part of the Engineering Leadership team, helped establish grading and promotion standards, built organization-wide management practices like one-on- ones and feedback mechanisms, and participated in designing and implementing our overall Product and Engineering structure and workflow.",
+                "Brought Heroku\u2019s security practices into alignment with the standards established by our parent organization, Salesforce.com, an industry-leader in Trust and Security."
+            ]
+        },
+        {
+            "company": "Whiskey Media",
+            "position": "Software Architect",
+            "startDate": "2008-03-01",
+            "endDate": "2009-02-01",
+            "summary": "Served as the Django expert for the engineering team building a content management system backing GiantBomb.com, Tested.com, and others."
+        },
+        {
+            "company": "Lawrence Journal-World",
+            "position": "Lead Developer",
+            "website": "https://ljworld.com/",
+            "startDate": "2005-08-01",
+            "endDate": "2008-03-01",
+            "summary": "Lead developer on Ellington, a news publishing platform build in Python/Django."
+        },
+        {
+            "company": "Lawrence Journal-World",
+            "position": "Web Developer",
+            "website": "https://ljworld.com/",
+            "startDate": "2004-08-01",
+            "endDate": "2005-08-01",
+            "summary": "Developer on Ellington, a news publishing platform build in Python/Django. Managed the initial open source release of Django in 2005."
+        },
+        {
+            "company": "ID Society",
+            "position": "Lead Developer",
+            "startDate": "2003-11-01",
+            "endDate": "2004-08-01",
+            "summary": "Developed an in-house CMS framework in PHP for design clients. Clients included Grand Marnier USA, Johnnie Walker Black Label, and USA Networks."
+        },
+        {
+            "company": "Radar/Digital Systems",
+            "position": "Software Developer",
+            "startDate": "2000-01-01",
+            "endDate": "2003-07-01",
+            "summary": "Led the design and development of a web-based wide-area video monitoring system marketed to harbors, airports and transportation companies. Clients included the Santa Cruz Harbor, the Port of Los Angeles, and CalTrans."
+        }
+    ],
+    "education": [
+        {
+            "institution": "University of California, Santa Cruz",
+            "studyType": "BA, Literature",
+            "startDate": "1999-01-01",
+            "endDate": "2003-01-01",
+            "summary": null
+        }
+    ]
+}

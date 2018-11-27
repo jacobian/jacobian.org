@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block bodyclass %}resume{% endblock bodyclass %}
+
+{% block main %}
+  {% load typogrify_tags %}
+  <main>
+    <h2>About</h2>
+    <p>{{ resume.basics.summary|typogrify }}</p>
+    {% for work in resume.work %}
+      <h3>{{ work.position|typogrify }}</h3>
+      <h4>{{ work.company|typogrify }}</h3>
+      <p>{{ work.summary|typogrify }}</p>
+    {% endfor %}
+  </main>
+{% endblock main %}

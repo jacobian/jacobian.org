@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 from blog.views import blog as blog_views
 from blog.views import micropub as micropub_views
+from resume import views as resume_views
 from blog import feeds
 from feedstats.utils import count_subscribers
 from . import url_converters
@@ -52,6 +53,7 @@ urlpatterns = [
     path(
         "micropub/media", micropub_views.MicropubMedia.as_view(), name="micropub_media"
     ),
+    path("resume/", resume_views.resume),
 ]
 if settings.DEBUG:
     import debug_toolbar
