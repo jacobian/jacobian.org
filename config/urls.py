@@ -49,6 +49,9 @@ urlpatterns = [
     path("rss/summary/", blog_views.redirect_old_feed),
     path("rss/full/", blog_views.redirect_old_feed),
     path("micropub", micropub_views.Micropub.as_view(), name="micropub"),
+    path(
+        "micropub/media", micropub_views.MicropubMedia.as_view(), name="micropub_media"
+    ),
 ]
 if settings.DEBUG:
     import debug_toolbar

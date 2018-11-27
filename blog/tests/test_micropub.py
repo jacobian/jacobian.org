@@ -24,10 +24,11 @@ H_ENTRY_WITH_TAGS = {
 
 
 def test_micropub_get(rf):
-    request = rf.get("/micropub")
+    request = rf.get("/micropub?q=config")
     view = micropub_views.Micropub.as_view()
     response = view(request)
-    assert response.content == b"{}"
+    body = json.loads(response.content)  # response should be valid JSON
+    assert "media-endpoint" in body  # response should have a media endpoint
 
 
 def test_micropub_decode_formdat():

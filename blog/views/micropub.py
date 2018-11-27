@@ -2,23 +2,25 @@ import json
 import logging
 
 import requests
-from blog.models import Entry, Tag
+from blog.models import Entry, Tag, Photo
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.timezone import now
 from django.views import View
+
+log = logging.getLogger("micropub")
 
 
 class BadRequest(Exception):
     pass
 
 
-log = logging.getLogger("micropub")
-
-
-class Micropub(View):
-    http_method_names = ["get", "post"]
+class MicropubBase(View):
+    """
+    Handles auth and a few odds and ends (csrf exemption) for all descending Micropub views.
+    """
 
     @classmethod
     def as_view(klass):
@@ -34,12 +36,60 @@ class Micropub(View):
             log.debug("bad request", *e.args)
             return HttpResponseBadRequest(e.args[0])
 
+    def authorize(self, request):
+        auth_header = request.META.get("HTTP_AUTHORIZATION", "")
+        if not auth_header and "access_token" in request.POST:
+            auth_header = "Bearer " + request.POST["access_token"]
+
+        if not auth_header:
+            log.info("permission denied: no auth token")
+            return HttpResponse(status=401)
+
+        # Since indieauth requires rel=me links back to the site (i.e. link to
+        # my site in my github profile), if we're on staging aiuth won't work.
+        # So, alow a bypass of auth in STAGING/DEBUG.
+        if settings.STAGING or settings.DEBUG:
+            bypass = getattr(settings, "INDIEAUTH_BYPASS_SECRET", "")
+            if bypass == auth_header.replace("Bearer ", ""):
+                return {"me": "https://jacobian.org/"}
+
+        response = requests.get(
+            "https://tokens.indieauth.com/token",
+            headers={"Authorization": auth_header, "Accept": "application/json"},
+        )
+
+        if response.status_code not in (200, 201):
+            log.info(
+                "permission denied: token endpoint returned %s", response.status_code
+            )
+            return HttpResponse(status=401)
+
+        indieauth = response.json()
+        if indieauth["me"].rstrip("/") != "https://jacobian.org":
+            log.info("permission denied me=%s", indieauth["me"])
+            return HttpResponse(status=401)
+
+        if "create" not in indieauth["scope"]:
+            log.info(
+                "permission denied, lacking create scope, scope=%s", indieauth["scope"]
+            )
+            return HttpResponse(status=401)
+
+        log.info("authorized me=%s", indieauth["me"])
+        return indieauth
+
+
+class Micropub(MicropubBase):
+    http_method_names = ["get", "post"]
+
     def get(self, request):
         """
         GET /micropub --> returns various config info
         """
         log.debug("get micropub q=%s", request.GET.dict())
-        return JsonResponse({})
+        return JsonResponse(
+            {"media-endpoint": request.build_absolute_uri(reverse("micropub_media"))}
+        )
 
     def post(self, request):
         auth = self.authorize(request)
@@ -122,7 +172,7 @@ class Micropub(View):
         elif title:
             slug = slugify(title)
         else:
-            slug = created.strftime("%H:%I:%S")
+            slug = created.strftime("%H%I%S")
 
         entry = Entry.objects.create(
             created=created,
@@ -140,46 +190,25 @@ class Micropub(View):
 
         return entry
 
-    def authorize(self, request):
-        auth_header = request.META.get("HTTP_AUTHORIZATION", "")
-        if not auth_header and "access_token" in request.POST:
-            auth_header = "Bearer " + request.POST["access_token"]
 
-        if not auth_header:
-            log.info("permission denied: no auth token")
-            return HttpResponse(status=401)
+class MicropubMedia(MicropubBase):
+    http_method_names = ["post"]
 
-        print(auth_header)
+    def post(self, request):
+        auth = self.authorize(request)
+        if isinstance(auth, HttpResponse):
+            return auth
 
-        # Since indieauth requires rel=me links back to the site (i.e. link to
-        # my site in my github profile), if we're on staging aiuth won't work.
-        # So, alow a bypass of auth in STAGING/DEBUG.
-        if settings.STAGING or settings.DEBUG:
-            bypass = getattr(settings, "INDIEAUTH_BYPASS_SECRET", "")
-            if bypass == auth_header.replace("Bearer ", ""):
-                return {"me": "https://jacobian.org/"}
+        if "file" not in request.FILES:
+            raise BadRequest("invalid request: no files uploaded")
 
-        response = requests.get(
-            "https://tokens.indieauth.com/token",
-            headers={"Authorization": auth_header, "Accept": "application/json"},
+        # Really this could be a file of any type... so using a Photo
+        # model will need to go once this becomes more general purpose.
+        photo = Photo.objects.create(
+            photo=request.FILES["file"], slug=slugify(request.FILES["file"].name)
         )
 
-        if response.status_code not in (200, 201):
-            log.info(
-                "permission denied: token endpoint returned %s", response.status_code
-            )
-            return HttpResponse(status=401)
+        response = HttpResponse(status=201)
+        response["Location"] = photo.photo.url
+        return response
 
-        indieauth = response.json()
-        if indieauth["me"].rstrip("/") != "https://jacobian.org":
-            log.info("permission denied me=%s", indieauth["me"])
-            return HttpResponse(status=401)
-
-        if "create" not in indieauth["scope"]:
-            log.info(
-                "permission denied, lacking create scope, scope=%s", indieauth["scope"]
-            )
-            return HttpResponse(status=401)
-
-        log.info("authorized me=%s", indieauth["me"])
-        return indieauth
