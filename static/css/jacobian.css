@@ -232,7 +232,7 @@ form.search {
     .twocol header,
     .resume header {
         display: grid;
-        grid-template-columns: 50% 50%;
+        grid-template-columns: 360px auto;
     }
     .twocol header nav,
     .resume header nav {
