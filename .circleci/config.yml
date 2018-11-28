@@ -42,6 +42,7 @@ jobs:
           command: |
             pipenv run python manage.py collectstatic
             pipenv run pytest --junit-xml test-reports/junit/test-results.xml
+            pipenv run codecov
 
       - store_test_results:
           path: test-reports

@@ -41,6 +41,7 @@ feedparser = "*"
 lxml = "*"
 cssselect = "*"
 pytest-cov = "*"
+codecov = "*"
 
 [requires]
 python_version = "3.6"
