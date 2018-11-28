@@ -1,0 +1,47 @@
+{
+  "name": "jacobian.org",
+  "scripts": {
+  },
+  "env": {
+    "AWS_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "AWS_STORAGE_BUCKET_NAME": {
+      "required": true
+    },
+    "DJANGO_SECRET": {
+      "generator": "secret"
+    },
+    "INDIEAUTH_BYPASS_SECRET": {
+      "generator": "secret"
+    },
+    "PINBOARD_API_KEY": {
+      "required": true
+    },
+    "STAGING": "1",
+    "SENTRY_DSN": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql",
+    "heroku-redis",
+    "sentry"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nginx"
+    }
+  ]
+}
