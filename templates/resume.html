@@ -1,16 +1,48 @@
-{% extends "base.html" %}
+{% extends "base_2col.html" %}
 
-{% block bodyclass %}resume{% endblock bodyclass %}
+{% block content %}
+  {% load typogrify_tags resume_tags %}
+  <p class="deck">{{ resume.basics.summary|typogrify }}</p>
 
-{% block main %}
-  {% load typogrify_tags %}
-  <main>
-    <h2>About</h2>
-    <p>{{ resume.basics.summary|typogrify }}</p>
-    {% for work in resume.work %}
+  <h2>Work History</h2>
+  {% for work in resume.work %}
+    <div class="work">
       <h3>{{ work.position|typogrify }}</h3>
-      <h4>{{ work.company|typogrify }}</h3>
+      <p class="company">
+        {% if work.website %}<a href="{{ work.website }}">{% endif %}
+        {{ work.company|typogrify }}
+        {% if work.website %}</a>{% endif %}
+      </p>
+      <p class="date">{{ work.startDate|to_date|date:"M Y" }} - {{ work.endDate }}</p>
       <p>{{ work.summary|typogrify }}</p>
-    {% endfor %}
-  </main>
-{% endblock main %}
+      {% if work.highlights %}
+        <ul>
+          {% for highlight in work.highlights %}
+            <li>{{ highlight|typogrify }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <h2>Education</h2>
+  {% for edu in resume.education %}
+    <h3>{{ edu.studyType }} - {{ edu.institution }}</h3>
+    <p class="date">{{ edu.endDate }}</p>
+  {% endfor %}
+
+{% endblock content %}
+
+{% block sidebar %}
+  <h4>Hire Me</h4>
+  <p>
+    I'm available for consulting engagements through my firm, <a href="https://revsys.com/">REVSYS</a>.
+    I'm also open to full-time employment in Director/VP roles in engineering or infosec.
+  </p>
+  <h4>Contact</h4>
+  <ul>
+    <li>Phone / Signal: {{ resume.basics.phone }}</li>
+    <li>Email: {{ resume.basics.email }}</li>
+  </ul>
+  <p><i class="fas fa-file-pdf"></i> <a href="https://represent.io/jacobian.pdf">Download PDF</a></p>
+{% endblock %}

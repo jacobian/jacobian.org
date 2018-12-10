@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     "blog",
     "feedstats",
     "speaking_portfolio",
+    "resume",
 )
 
 MIDDLEWARE = (

@@ -229,17 +229,14 @@ form.search {
 /*** overrides for wider screens ************************************************/
 
 @media only screen and (min-width: 768px) {
-    .twocol header,
-    .resume header {
+    .twocol header {
         display: grid;
         grid-template-columns: 360px auto;
     }
-    .twocol header nav,
-    .resume header nav {
+    .twocol header nav {
         text-align: right;
     }
-    .twocol header h1,
-    .resume header h1 {
+    .twocol header h1 {
         font-size: 4rem;
     }
     .twocol .main-wrap {
