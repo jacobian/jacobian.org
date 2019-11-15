@@ -5,39 +5,37 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('blog', '0017_remove_old_photo_models'),
-    ]
+    dependencies = [("blog", "0017_remove_old_photo_models")]
 
     operations = [
         migrations.AddField(
-            model_name='blogmark',
-            name='latitude',
+            model_name="blogmark",
+            name="latitude",
             field=models.FloatField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='blogmark',
-            name='longitude',
+            model_name="blogmark",
+            name="longitude",
             field=models.FloatField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='entry',
-            name='latitude',
+            model_name="entry",
+            name="latitude",
             field=models.FloatField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='entry',
-            name='longitude',
+            model_name="entry",
+            name="longitude",
             field=models.FloatField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='quotation',
-            name='latitude',
+            model_name="quotation",
+            name="latitude",
             field=models.FloatField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='quotation',
-            name='longitude',
+            model_name="quotation",
+            name="longitude",
             field=models.FloatField(blank=True, null=True),
         ),
     ]

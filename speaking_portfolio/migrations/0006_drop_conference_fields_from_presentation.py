@@ -7,21 +7,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('speaking_portfolio', '0005_move_conference_data_to_conference_model'),
+        ("speaking_portfolio", "0005_move_conference_data_to_conference_model")
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='presentation',
-            name='conference_link',
-        ),
-        migrations.RemoveField(
-            model_name='presentation',
-            name='conference_title',
-        ),
+        migrations.RemoveField(model_name="presentation", name="conference_link"),
+        migrations.RemoveField(model_name="presentation", name="conference_title"),
         migrations.AlterField(
-            model_name='presentation',
-            name='conference',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='presentations', to='speaking_portfolio.Conference'),
+            model_name="presentation",
+            name="conference",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="presentations",
+                to="speaking_portfolio.Conference",
+            ),
         ),
     ]

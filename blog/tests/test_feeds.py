@@ -17,4 +17,3 @@ def test_sitemap_xml(rf):
         for e in doc.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc")
     }
     assert expected_urls == actual_urls
-

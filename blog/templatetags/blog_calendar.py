@@ -137,7 +137,6 @@ WHITE = (255, 255, 255)
 
 
 class ColourGradient(object):
-
     def __init__(self, min_col, max_col):
         self.min_col = min_col
         self.max_col = max_col

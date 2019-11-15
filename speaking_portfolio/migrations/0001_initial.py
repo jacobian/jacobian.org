@@ -8,23 +8,33 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Presentation',
+            name="Presentation",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', django_postgres_unlimited_varchar.UnlimitedCharField()),
-                ('slug', models.SlugField()),
-                ('date', models.DateField()),
-                ('description', models.TextField(blank=True)),
-                ('conference_title', django_postgres_unlimited_varchar.UnlimitedCharField()),
-                ('conference_link', models.URLField(blank=True)),
-                ('video_link', models.URLField(blank=True)),
-                ('slides_link', models.URLField(blank=True)),
-                ('text_link', models.URLField(blank=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", django_postgres_unlimited_varchar.UnlimitedCharField()),
+                ("slug", models.SlugField()),
+                ("date", models.DateField()),
+                ("description", models.TextField(blank=True)),
+                (
+                    "conference_title",
+                    django_postgres_unlimited_varchar.UnlimitedCharField(),
+                ),
+                ("conference_link", models.URLField(blank=True)),
+                ("video_link", models.URLField(blank=True)),
+                ("slides_link", models.URLField(blank=True)),
+                ("text_link", models.URLField(blank=True)),
             ],
-        ),
+        )
     ]

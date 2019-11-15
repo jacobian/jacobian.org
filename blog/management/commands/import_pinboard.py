@@ -8,7 +8,6 @@ from ...models import Blogmark, Tag
 
 
 class Command(BaseCommand):
-
     def handle(self, *args, **kwargs):
 
         # Compare the last time we saved a bookmark locally to the latest update
@@ -49,4 +48,3 @@ class Command(BaseCommand):
                 Tag.objects.get_or_create(tag=tag)[0] for tag in bookmark.tags
             )
             print("created" if created else "updated", blogmark.link_url)
-

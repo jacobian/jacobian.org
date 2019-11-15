@@ -113,4 +113,3 @@ def test_micropub_post_with_tags(rf):
     assert {t.tag for t in entry.tags.all()} == set(
         H_ENTRY_WITH_TAGS["properties"]["category"]
     )
-

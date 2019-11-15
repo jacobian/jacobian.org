@@ -211,4 +211,3 @@ class MicropubMedia(MicropubBase):
         response = HttpResponse(status=201)
         response["Location"] = photo.photo.url
         return response
-

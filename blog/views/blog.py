@@ -109,7 +109,7 @@ def index(request):
     )
     past_talks = past_talks[:nt]
 
-    talks = (list(future_talks) + list(past_talks))
+    talks = list(future_talks) + list(past_talks)
     talks = talks[:nt]
 
     response = render(
@@ -179,9 +179,7 @@ def archive_year(request, year):
             months.append(
                 {"date": date, "counts": counts, "counts_not_0": counts_not_0}
             )
-            max_count = max(
-                max_count, entry_count, link_count, quote_count
-            )
+            max_count = max(max_count, entry_count, link_count, quote_count)
     return render(
         request,
         "archive_year.html",
@@ -190,7 +188,6 @@ def archive_year(request, year):
 
 
 def archive_month(request, year, month):
-
     def by_date(objs):
         lookup = {}
         for obj in objs:

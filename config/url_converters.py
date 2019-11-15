@@ -38,4 +38,3 @@ def register_all():
     register_converter(FourDigitYearConverter, "year")
     register_converter(Month3Converter, "month")
     register_converter(TwoDigitDayConverter, "day")
-

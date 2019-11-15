@@ -7,13 +7,11 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('blog', '0002_auto_20150713_0551'),
-    ]
+    dependencies = [("blog", "0002_auto_20150713_0551")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='comment',
-            options={'get_latest_by': 'created', 'ordering': ('-created',)},
-        ),
+            name="comment",
+            options={"get_latest_by": "created", "ordering": ("-created",)},
+        )
     ]

@@ -8,24 +8,22 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('blog', '0004_metadata_json'),
-    ]
+    dependencies = [("blog", "0004_metadata_json")]
 
     operations = [
         migrations.AddField(
-            model_name='blogmark',
-            name='search_document',
+            model_name="blogmark",
+            name="search_document",
             field=django.contrib.postgres.search.SearchVectorField(null=True),
         ),
         migrations.AddField(
-            model_name='entry',
-            name='search_document',
+            model_name="entry",
+            name="search_document",
             field=django.contrib.postgres.search.SearchVectorField(null=True),
         ),
         migrations.AddField(
-            model_name='quotation',
-            name='search_document',
+            model_name="quotation",
+            name="search_document",
             field=django.contrib.postgres.search.SearchVectorField(null=True),
         ),
     ]

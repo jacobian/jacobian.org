@@ -8,24 +8,28 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('blog', '0006_gin_indexes'),
-    ]
+    dependencies = [("blog", "0006_gin_indexes")]
 
     operations = [
         migrations.AlterField(
-            model_name='blogmark',
-            name='metadata',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, default={}),
+            model_name="blogmark",
+            name="metadata",
+            field=django.contrib.postgres.fields.jsonb.JSONField(
+                blank=True, default={}
+            ),
         ),
         migrations.AlterField(
-            model_name='entry',
-            name='metadata',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, default={}),
+            model_name="entry",
+            name="metadata",
+            field=django.contrib.postgres.fields.jsonb.JSONField(
+                blank=True, default={}
+            ),
         ),
         migrations.AlterField(
-            model_name='quotation',
-            name='metadata',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, default={}),
+            model_name="quotation",
+            name="metadata",
+            field=django.contrib.postgres.fields.jsonb.JSONField(
+                blank=True, default={}
+            ),
         ),
     ]

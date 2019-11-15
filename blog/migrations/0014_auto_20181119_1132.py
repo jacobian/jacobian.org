@@ -7,26 +7,36 @@ import django_postgres_unlimited_varchar
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('blog', '0013_auto_20181114_0859'),
-    ]
+    dependencies = [("blog", "0013_auto_20181114_0859")]
 
     operations = [
         migrations.CreateModel(
-            name='Series',
+            name="Series",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', django_postgres_unlimited_varchar.UnlimitedCharField()),
-                ('slug', models.SlugField()),
-                ('description', models.TextField(blank=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", django_postgres_unlimited_varchar.UnlimitedCharField()),
+                ("slug", models.SlugField()),
+                ("description", models.TextField(blank=True)),
             ],
-            options={
-                'verbose_name_plural': 'series',
-            },
+            options={"verbose_name_plural": "series"},
         ),
         migrations.AddField(
-            model_name='entry',
-            name='series',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='entries', to='blog.Series'),
+            model_name="entry",
+            name="series",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="entries",
+                to="blog.Series",
+            ),
         ),
     ]

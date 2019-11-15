@@ -6,14 +6,20 @@ import django_postgres_unlimited_varchar
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('speaking_portfolio', '0002_presentation_type'),
-    ]
+    dependencies = [("speaking_portfolio", "0002_presentation_type")]
 
     operations = [
         migrations.AlterField(
-            model_name='presentation',
-            name='type',
-            field=django_postgres_unlimited_varchar.UnlimitedCharField(choices=[('keynote', 'Keynote'), ('talk', 'Talk'), ('tutorial', 'Tutorial'), ('panel', 'Panel')], default='talk'),
-        ),
+            model_name="presentation",
+            name="type",
+            field=django_postgres_unlimited_varchar.UnlimitedCharField(
+                choices=[
+                    ("keynote", "Keynote"),
+                    ("talk", "Talk"),
+                    ("tutorial", "Tutorial"),
+                    ("panel", "Panel"),
+                ],
+                default="talk",
+            ),
+        )
     ]

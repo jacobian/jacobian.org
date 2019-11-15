@@ -5,21 +5,10 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('speaking_portfolio', '0008_migrate_coverage_to_model'),
-    ]
+    dependencies = [("speaking_portfolio", "0008_migrate_coverage_to_model")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='presentation',
-            name='slides_link',
-        ),
-        migrations.RemoveField(
-            model_name='presentation',
-            name='text_link',
-        ),
-        migrations.RemoveField(
-            model_name='presentation',
-            name='video_link',
-        ),
+        migrations.RemoveField(model_name="presentation", name="slides_link"),
+        migrations.RemoveField(model_name="presentation", name="text_link"),
+        migrations.RemoveField(model_name="presentation", name="video_link"),
     ]

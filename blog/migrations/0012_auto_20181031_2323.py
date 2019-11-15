@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('blog', '0011_entry_extra_head_html'),
-    ]
+    dependencies = [("blog", "0011_entry_extra_head_html")]
 
     operations = [
         migrations.AlterField(
-            model_name='blogmark',
-            name='link_url',
+            model_name="blogmark",
+            name="link_url",
             field=models.URLField(max_length=1000),
-        ),
+        )
     ]

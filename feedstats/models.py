@@ -8,6 +8,4 @@ class SubscriberCount(models.Model):
     user_agent = models.CharField(max_length=256, db_index=True)
 
     class Meta:
-        index_together = [
-            ['path', 'user_agent', 'count', 'created'],
-        ]
+        index_together = [["path", "user_agent", "count", "created"]]

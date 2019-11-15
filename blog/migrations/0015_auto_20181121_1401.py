@@ -5,16 +5,9 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('blog', '0014_auto_20181119_1132'),
-    ]
+    dependencies = [("blog", "0014_auto_20181119_1132")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='comment',
-            name='content_type',
-        ),
-        migrations.DeleteModel(
-            name='Comment',
-        ),
+        migrations.RemoveField(model_name="comment", name="content_type"),
+        migrations.DeleteModel(name="Comment"),
     ]

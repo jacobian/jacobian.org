@@ -15,7 +15,6 @@ class BaseAdmin(admin.ModelAdmin):
 
 
 class MyEntryForm(forms.ModelForm):
-
     def clean_body(self):
         # Ensure this is valid XML
         body = self.cleaned_data["body"]
@@ -70,4 +69,3 @@ class TagAdmin(admin.ModelAdmin):
 @admin.register(Series)
 class SeriesAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
-
