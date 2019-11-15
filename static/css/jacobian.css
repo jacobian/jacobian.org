@@ -18,164 +18,173 @@ NB: mobile-first, so sugar for larger screens down below.
 /*** basic fonts and elements ************************************************/
 
 body {
-    font-family: 'Merriweather', serif;
-    font-weight: light;
-    line-height: 1.8;
-    font-size: 1.5em;
-    color: #1f2426;
-    background-color: #f2ecde;
+  font-family: "Merriweather", serif;
+  font-weight: light;
+  line-height: 1.8;
+  font-size: 1.5em;
+  color: #1f2426;
+  background-color: #f2ecde;
 }
 
-a, a:visited {
-    color: inherit;
-    text-decoration: none;
-    /* thick highlight bottom, using box-shadow to get the highlight closer to the text */
-    box-shadow: inset 0 -3px #ffc773;
+a,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+  /* thick highlight bottom, using box-shadow to get the highlight closer to the text */
+  box-shadow: inset 0 -3px #ffc773;
 }
 
 a:hover {
-    color: inherit;
-    background-color: #ffc773;
+  color: inherit;
+  background-color: #ffc773;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto Condensed', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto Condensed", sans-serif;
 }
 h2 {
-    font-size: 3rem;
+  font-size: 3rem;
 }
 h3 {
-    font-size: 2.5rem;
-    font-weight: normal;
+  font-size: 2.5rem;
+  font-weight: normal;
 }
 h4 {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 h5 {
-    font-size: 1.5rem;
-
+  font-size: 1.5rem;
 }
 
 .date {
-    font-weight: normal;
-    font-size: 1.2rem;
-    color: #4b4237;
-    white-space: nowrap;
+  font-weight: normal;
+  font-size: 1.2rem;
+  color: #4b4237;
+  white-space: nowrap;
 }
 
 /* reST-converted entries use pre.literal-block instead of pre>code */
-pre, code, tt {
-    font-family: 'Source Code Pro', monospace;
-    background-color: #4b42370e;
+pre,
+code,
+tt {
+  font-family: "Source Code Pro", monospace;
+  background-color: #4b42370e;
 }
-pre > code, pre.literal-block
-{
-    display: block;
-    white-space: pre;
-    margin-left: 1rem 2.5rem;
-    padding: 0.5rem;
+pre > code,
+pre.literal-block {
+  display: block;
+  white-space: pre;
+  margin-left: 1rem 2.5rem;
+  padding: 0.5rem;
 }
 
 nav {
-    font-family: 'Roboto Condense', sans-serif;
-    margin-top: 1em;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    font-weight: bold;
+  font-family: "Roboto Condense", sans-serif;
+  margin-top: 1em;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
-
 nav ul {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 nav li {
-    display: inline;
+  display: inline;
 }
 
 nav li a {
-    box-shadow: none;
-    padding: 1em;
-    border-radius: 4px;
+  box-shadow: none;
+  padding: 1em;
+  border-radius: 4px;
 }
-
 
 /*** header ************************************************/
 
 .header-wrap {
-    background-color: #ff9900;
-    background-image: url("../img/lucas-benjamin-729304-unsplash.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
+  background-color: #ff9900;
+  background-image: url("../img/lucas-benjamin-729304-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-header, .main-wrap, footer {
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
+header,
+.main-wrap,
+footer {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 header {
-    padding: 2em 0;
+  padding: 2em 0;
 }
 
 header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0;
-    padding-left: 8px;
-    font-weight: bold;
+  font-size: 2.5rem;
+  margin-bottom: 0;
+  padding-left: 8px;
+  font-weight: bold;
 }
 
-header h1 a, header h1 a:visited {
-    background-color: #1f2426;
-    color:#ff9900;
-    box-shadow: none;
-    padding: 0.1em 0.3em;
-    border-radius: 4px;
+header h1 a,
+header h1 a:visited {
+  background-color: #1f2426;
+  color: #ff9900;
+  box-shadow: none;
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
 }
 
 /*** main body / sidebar / footer ************************************************/
 
 main {
-    padding: 0 6px;
-    margin-top: 1em;
+  padding: 0 6px;
+  margin-top: 1em;
 }
 
 aside {
-    color: #4b4237;
-    font-size: 0.8em;
-    padding: 0 6px;
+  color: #4b4237;
+  font-size: 0.8em;
+  padding: 0 6px;
 }
 
-main li, aside li {
-    margin-left: 1em;
-    text-indent: -1em;
+main li,
+aside li {
+  margin-left: 1em;
+  list-style-position: outside;
 }
 
 aside p {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 aside .series-sidebar li {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
-
 footer {
-    margin: 10em auto;
-    font-size: 0.7em;
-    color: #4b4237;
-    text-align: center;
+  margin: 10em auto;
+  font-size: 0.7em;
+  color: #4b4237;
+  text-align: center;
 }
 
 /*** calendar (date archive pages) ************************************************/
 
 .calendar {
   table-layout: fixed;
-  width: 100%
+  width: 100%;
 }
-.calendar td, .calendar th {
-  border: 1px solid #E1E1E1;
+.calendar td,
+.calendar th {
+  border: 1px solid #e1e1e1;
   text-align: center;
   padding: 0;
 }
@@ -192,69 +201,85 @@ footer {
 /*** search ************************************************/
 
 form.search {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .pagination {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .search-results .summary {
-    margin-top: -1em;
-    margin-left: 2em;
+  margin-top: -1em;
+  margin-left: 2em;
 }
 
 .search-results h4 {
-    padding-left: 1.5em;
-    text-indent: -1.5em;
+  padding-left: 1.5em;
+  text-indent: -1.5em;
 }
 
 /*** tags *******************************************************/
 
 .tagcloud {
-    text-align: center;
+  text-align: center;
 }
 .tagcloud a {
-    vertical-align: middle
+  vertical-align: middle;
 }
-.tagcloud .not-popular-at-all { font-size: 0.70em; }
-.tagcloud .not-very-popular { font-size: 0.89em; }
-.tagcloud .somewhat-popular { font-size: 1.07em; }
-.tagcloud .somewhat-more-popular { font-size: 1.26em; }
-.tagcloud .popular { font-size: 1.44em; }
-.tagcloud .more-than-just-popular { font-size: 1.63em; }
-.tagcloud .very-popular { font-size: 1.81em; }
-.tagcloud .ultra-popular { font-size: 2.00em; }
+.tagcloud .not-popular-at-all {
+  font-size: 0.7em;
+}
+.tagcloud .not-very-popular {
+  font-size: 0.89em;
+}
+.tagcloud .somewhat-popular {
+  font-size: 1.07em;
+}
+.tagcloud .somewhat-more-popular {
+  font-size: 1.26em;
+}
+.tagcloud .popular {
+  font-size: 1.44em;
+}
+.tagcloud .more-than-just-popular {
+  font-size: 1.63em;
+}
+.tagcloud .very-popular {
+  font-size: 1.81em;
+}
+.tagcloud .ultra-popular {
+  font-size: 2em;
+}
 
 /*** overrides for wider screens ************************************************/
 
 @media only screen and (min-width: 768px) {
-    .twocol header {
-        display: grid;
-        grid-template-columns: 360px auto;
-    }
-    .twocol header nav {
-        text-align: right;
-    }
-    .twocol header h1 {
-        font-size: 4rem;
-    }
-    .twocol .main-wrap {
-        display: grid;
-        max-width: 960px;
-        grid-gap: 20px;
-        grid-template-columns: minmax(0px, 760px) 20em;
-    }
-    .twocol aside {
-        margin-top: 1.5em;
-        border-left: 1px #4b4237 dotted;
-        padding-left: 20px;
-    }
+  .twocol header {
+    display: grid;
+    grid-template-columns: 360px auto;
+  }
+  .twocol header nav {
+    text-align: right;
+  }
+  .twocol header h1 {
+    font-size: 4rem;
+  }
+  .twocol .main-wrap {
+    display: grid;
+    max-width: 960px;
+    grid-gap: 20px;
+    grid-template-columns: minmax(0px, 760px) 20em;
+  }
+  .twocol aside {
+    margin-top: 1.5em;
+    border-left: 1px #4b4237 dotted;
+    padding-left: 20px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    aside {
-        border-top: 1px #4b4237 dotted;
-        padding-top: 2em;
-    }
+  aside {
+    border-top: 1px #4b4237 dotted;
+    padding-top: 2em;
+  }
 }
