@@ -6,7 +6,7 @@
   <h2>Archive for {{ year }}</h2>
   <ul>
     {% for month in months %}
-      <li><a href="/{{ year }}/{{ month.date|date:"M" }}/">{{ month.date|date:"F" }}</a> -
+      <li><a href="/{{ year }}/{{ month.date|date:"M"|lower }}/">{{ month.date|date:"F" }}</a> -
       {% for count in month.counts_not_0 %}
         {{ count.1 }}
         {% if count.0 == "entry" %}
