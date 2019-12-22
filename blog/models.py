@@ -1,8 +1,7 @@
 import re
+import datetime as dt
 from collections import Counter
 from xml.etree import ElementTree
-
-import arrow
 from django.contrib.postgres.fields import JSONField
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
@@ -97,7 +96,7 @@ class BaseModel(models.Model):
         return self._meta.model_name
 
     def created_unixtimestamp(self):
-        return arrow.get(self.created).timestamp
+        return self.created.timestamp()
 
     def tag_summary(self):
         return " ".join(t.tag for t in self.tags.all())
