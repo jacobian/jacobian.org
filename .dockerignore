@@ -1,0 +1,9 @@
+.circleci
+.coverage
+.env
+.ipynb_checkpoints/
+.pytest_cache/
+.vscode/
+*.pyc
+jupyter-notebooks/
+staticfiles/

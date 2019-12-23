@@ -55,4 +55,4 @@ ENV PATH "/code/.venv/bin:${PATH}"
 # Collect assets
 RUN python manage.py collectstatic --no-input
 
-CMD waitress-serve --listen=*:8000 config.wsgi:application
+CMD waitress-serve --listen=*:$PORT config.wsgi:application
