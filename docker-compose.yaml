@@ -17,8 +17,6 @@ services:
     environment:
       - DATABASE_URL=postgres://postgres@db/jacobian.org
       - PYTHONDONTWRITEBYTECODE=true
-    volumes:
-      - .:/code
 
 volumes:
   postgres_data:
