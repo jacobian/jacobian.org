@@ -1,7 +1,9 @@
 import os
-import dj_database_url
 import urllib.parse
+import environ
 
+env = environ.Env(DEBUG=(bool, False), STAGING=(bool, False))
+env.read_env(os.environ.get("ENV_FILE", ".env"))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -14,10 +16,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = os.environ.get("DJANGO_SECRET") or "dev-secret-s(p7%ue-l6r^&@y63p*ix*1"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DJANGO_DEBUG"))
+DEBUG = env("DEBUG")
 INTERNAL_IPS = ("127.0.0.1",)
 
-STAGING = bool(os.environ.get("STAGING"))
+STAGING = env("STAGING")
 
 # Cloudflare details
 CLOUDFLARE_EMAIL = os.environ.get("CLOUDFLARE_EMAIL", "")
@@ -59,8 +61,13 @@ MIDDLEWARE = (
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 )
 if DEBUG:
-    MIDDLEWARE = ("debug_toolbar.middleware.DebugToolbarMiddleware",) + MIDDLEWARE
-    INSTALLED_APPS += ("debug_toolbar",)
+    try:
+        import debug_toolbar
+    except ImportError:
+        pass
+    else:
+        MIDDLEWARE = ("debug_toolbar.middleware.DebugToolbarMiddleware",) + MIDDLEWARE
+        INSTALLED_APPS += ("debug_toolbar",)
 
 # Sentry
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
@@ -94,13 +101,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    "default": {"ENGINE": "django.db.backends.postgresql", "NAME": "simonwillisonblog"}
-}
+DATABASES = {"default": env.db(default="postgres:///jacobiandotorg")}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -110,14 +111,6 @@ TIME_ZONE = "America/New_York"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-
-if "DATABASE_URL" in os.environ:
-    # Parse database configuration from $DATABASE_URL
-    DATABASES["default"] = dj_database_url.config()
-
-if "DISABLE_AUTOCOMMIT" in os.environ:
-    DATABASES["default"]["AUTOCOMMIT"] = False
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
