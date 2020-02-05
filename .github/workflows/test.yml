@@ -1,0 +1,35 @@
+name: test
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      
+      - uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install poetry==1.0.0
+          python -m poetry install
+      
+      - name: pytest
+        env:
+          DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
+        run: |
+          python -m poetry run pytest
