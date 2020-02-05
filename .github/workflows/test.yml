@@ -28,8 +28,16 @@ jobs:
           python -m pip install poetry==1.0.0
           python -m poetry install
       
+      - name: collectstatic
+        env:
+          DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
+          SECRET_KEY: 'for-testing'
+        run: |
+          poetry run python manage.py collectstatic --noinput
+
       - name: pytest
         env:
           DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
+          SECRET_KEY: 'for-testing'
         run: |
           python -m poetry run pytest
