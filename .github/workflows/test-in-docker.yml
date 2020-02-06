@@ -25,9 +25,9 @@ jobs:
           docker build . --tag jacobiandotorg
 
       - name: "test"
-        env:
-          DATABASE_URL: |
-            postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres
-          SECRET_KEY: "for-testing"
-        run: |
-          docker run jacobiandotorg:latest pytest
+        run: >
+          docker run 
+            --env DATABASE_URL=postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres 
+            --env SECRET_KEY=forteststing
+            jacobiandotorg:latest 
+            pytest
