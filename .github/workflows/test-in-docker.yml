@@ -1,0 +1,33 @@
+name: "test with docker"
+
+on: [pull_request, push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
+      - name: "docker build"
+        run: |
+          docker build . --file --tag jacobiandotorg
+
+      - name: "test"
+        env:
+          DATABASE_URL: |
+            postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres
+          SECRET_KEY: "for-testing"
+        run: |
+          docker run jacobiandotorg:latest pytest
