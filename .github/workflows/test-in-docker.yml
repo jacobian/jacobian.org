@@ -22,7 +22,7 @@ jobs:
 
       - name: "docker build"
         run: |
-          docker build . --file --tag jacobiandotorg
+          docker build . --tag jacobiandotorg
 
       - name: "test"
         env:
