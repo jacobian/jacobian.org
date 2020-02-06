@@ -27,7 +27,7 @@ jobs:
       - name: "test"
         run: >
           docker run 
-          --env DATABASE_URL=postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres 
+          --env DATABASE_URL=postgres://postgres:postgres@postgres:${{ job.services.postgres.ports[5432] }}/postgres 
           --env SECRET_KEY=forteststing
           jacobiandotorg:latest 
           pytest
