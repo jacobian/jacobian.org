@@ -12,7 +12,7 @@ jobs:
 
       - name: "build"
         run: |
-          docker-compose build
+          docker-compose -f docker-compose.yaml build
 
       - name: "test"
-        run: docker-compose run web pytest
+        run: docker-compose -f docker-compose.yaml run web pytest
