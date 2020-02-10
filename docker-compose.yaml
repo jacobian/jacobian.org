@@ -10,7 +10,6 @@ services:
 
   web:
     build: .
-    env_file: [".env"]
     command: waitress-serve --listen=*:8000 config.wsgi:application
     ports: ["8000:8000"]
     depends_on: ["db"]
