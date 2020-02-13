@@ -50,7 +50,7 @@ jobs:
           DATABASE_URL: "postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres"
           SECRET_KEY: "for-testing"
         run: |
-          poetry run python manage.py collectstatic --noinput
+          python -m poetry run python manage.py collectstatic --noinput
 
       - name: pytest
         env:
