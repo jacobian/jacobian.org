@@ -24,6 +24,10 @@ jobs:
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
 
     steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: "275.0.0"
