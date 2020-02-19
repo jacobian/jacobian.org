@@ -18,21 +18,19 @@ jobs:
   # Deploy to gcloud run - but only if tests pass, and on push to master.
   deploy:
     needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+
     steps:
-      - run: echo "hi"
-    # if: github.event == 'push' && github.ref == 'refs/heads/master'
-    # env:
-    #   PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
-    #
-    # steps:
-    #   - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-    #     with:
-    #       version: "275.0.0"
-    #       service_account_email: ${{ secrets.GCLOUD_SA_EMAIL }}
-    #       service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
-    #
-    #   - name: deploy
-    #     run: |
-    #       gcloud config set project $PROJECT_ID
-    #       gcloud builds submit --config .cloudbuild/deploy.yaml
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: "275.0.0"
+          service_account_email: ${{ secrets.GCLOUD_SA_EMAIL }}
+          service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
+
+      - name: deploy
+        run: |
+          gcloud config set project $PROJECT_ID
+          gcloud builds submit --config .cloudbuild/deploy.yaml
