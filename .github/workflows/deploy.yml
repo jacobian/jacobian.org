@@ -1,0 +1,33 @@
+name: deploy to gcr
+on:
+  push:
+    branches: ["master"]
+
+env:
+  PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
+      # Have to repeat tests to make sure tests are passing because I can't find
+      # a way to depend on the test workflow passing :(
+      - name: "build"
+        run: docker-compose -f docker-compose.yaml build
+      - name: "test"
+        run: docker-compose -f docker-compose.yaml run web pytest
+
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: "275.0.0"
+          service_account_email: ${{ secrets.GCLOUD_SA_EMAIL }}
+          service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
+
+      - name: deploy
+        run: |
+          gcloud config set project $PROJECT_ID
+          gcloud builds submit --config .cloudbuild/deploy.yaml
