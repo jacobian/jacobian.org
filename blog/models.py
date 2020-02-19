@@ -135,6 +135,7 @@ class Series(models.Model):
 class Entry(BaseModel):
     title = models.CharField(max_length=255, blank=True)
     body = models.TextField()
+    summary = models.TextField(blank=True)
     tweet_html = models.TextField(
         blank=True,
         null=True,

@@ -10,7 +10,7 @@ class BaseAdmin(admin.ModelAdmin):
     raw_id_fields = ("tags",)
     list_display = ("__str__", "slug", "created", "tag_summary")
     autocomplete_fields = ("tags",)
-    readonly_fields = ("import_ref",)
+    readonly_fields = ["import_ref"]
     exclude = ["search_document"]
 
 
@@ -30,6 +30,36 @@ class EntryAdmin(BaseAdmin):
     search_fields = ("tags__tag", "title", "body")
     form = MyEntryForm
     prepopulated_fields = {"slug": ("title",)}
+    readonly_fields = BaseAdmin.readonly_fields + ["metadata"]
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": [
+                    "title",
+                    "slug",
+                    "body",
+                    "summary",
+                    "created",
+                    "tags",
+                    "series",
+                ]
+            },
+        ),
+        (
+            "Advanced",
+            {
+                "classes": ("collapse",),
+                "fields": [
+                    "tweet_html",
+                    "extra_head_html",
+                    ("longitude", "latitude"),
+                    "import_ref",
+                    "metadata",
+                ],
+            },
+        ),
+    ]
 
 
 @admin.register(Quotation)
