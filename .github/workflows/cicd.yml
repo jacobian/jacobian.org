@@ -18,10 +18,10 @@ jobs:
   # Deploy to gcloud run - but only if tests pass, and on push to master.
   deploy:
     needs: test
+    runs-on: ubuntu-latest
     steps:
       - run: echo "hi"
     # if: github.event == 'push' && github.ref == 'refs/heads/master'
-    # runs-on: ubuntu-latest
     # env:
     #   PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
     #
