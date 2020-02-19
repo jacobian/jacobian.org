@@ -5,6 +5,7 @@ services:
     image: postgres:11
     environment:
       - POSTGRES_DB=jacobian.org
+      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
