@@ -1,26 +1,29 @@
-name: deploy to gcr
-on:
-  push:
-    branches: ["master"]
-
-env:
-  PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+name: ci/cd
+on: [pull_request, push]
 
 jobs:
-  deploy:
+  # Run tests inside Docker -- this way the test environment mirrors production
+  # as much as possible.
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
         with:
           fetch-depth: 1
-
-      # Have to repeat tests to make sure tests are passing because I can't find
-      # a way to depend on the test workflow passing :(
       - name: "build"
         run: docker-compose -f docker-compose.yaml build
       - name: "test"
         run: docker-compose -f docker-compose.yaml run web pytest
 
+  # Deploy to gcloud run - but only if tests pass, and on push to master.
+  deploy:
+    needs: test
+    if: github.event == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+
+    steps:
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: "275.0.0"
